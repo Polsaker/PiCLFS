@@ -1,0 +1,10 @@
+# /etc/inittab
+
+::sysinit:/etc/rc.d/startup
+
+# Put a getty on the serial line (for a terminal)
+# uncomment this line if your using a serial console
+::respawn:/sbin/getty -L ttyAMA0 115200 vt100
+
+::shutdown:/etc/rc.d/shutdown
+::ctrlaltdel:/sbin/reboot
