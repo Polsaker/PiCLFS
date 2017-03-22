@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/m4/m4-1.4.18.tar.xz
+NAME := m4
+SOURCE := $(PACKAGES_DIR)/$(NAME)/m4-1.4.18.tar.xz
 
 toolchain:
 	@$(STEP) "M4 1.4.18"
@@ -7,3 +8,4 @@ toolchain:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/m4-1.4.18
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/m4-1.4.18
 	@rm -rf $(BUILD_DIR)/m4-1.4.18
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages

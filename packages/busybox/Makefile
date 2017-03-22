@@ -1,4 +1,5 @@
-SOURCE=$(PACKAGES_DIR)/busybox/busybox-1.26.2.tar.bz2
+NAME := busybox
+SOURCE := $(PACKAGES_DIR)/$(NAME)/busybox-1.26.2.tar.bz2
 
 system:
 	@$(STEP) "Busybox 1.26.2"
@@ -24,3 +25,4 @@ system:
 	@cp -v $(BUILD_DIR)/busybox-1.26.2/examples/depmod.pl $(TOOLS_DIR)/usr/bin
 	@chmod -v 755 $(TOOLS_DIR)/usr/bin/depmod.pl
 	@rm -rf $(BUILD_DIR)/busybox-1.26.2
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

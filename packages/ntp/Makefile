@@ -1,7 +1,12 @@
-SOURCE=$(PACKAGES_DIR)/ntp/ntp-4.2.8p9.tar.gz
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
+NAME := ntp
+SOURCE := $(PACKAGES_DIR)/$(NAME)/ntp-4.2.8p9.tar.gz
+TARGET_DEPENDENCIES := libcap openssl
 
 system:
 	@$(STEP) "Ntp 4.2.8p9"
+	@$(call system_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -33,3 +38,4 @@ system:
 	@echo 'ntp:x:87:87:Network Time Protocol:/var/lib/ntp:/bin/false' >> $(ROOTFS_DIR)/etc/passwd
 	@mkdir -pv $(ROOTFS_DIR)/var/lib/ntp
 	@rm -rf $(BUILD_DIR)/ntp-4.2.8p9
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

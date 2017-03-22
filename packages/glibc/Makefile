@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/glibc/glibc-2.25.tar.xz
+NAME := glibc
+SOURCE := $(PACKAGES_DIR)/$(NAME)/glibc-2.25.tar.xz
 
 staging:
 	@$(STEP) "Glibc 2.25"
@@ -28,6 +29,7 @@ staging:
 	@cp -v $(BUILD_DIR)/glibc-2.25/nscd/nscd.conf $(SYSROOT_DIR)/etc/nscd.conf
 	@mkdir -pv $(SYSROOT_DIR)/var/cache/nscd
 	@rm -rf $(BUILD_DIR)/glibc-2.25
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 
 system:
@@ -58,3 +60,4 @@ system:
 	@cp -v $(BUILD_DIR)/glibc-2.25/nscd/nscd.conf $(ROOTFS_DIR)/etc/nscd.conf
 	@mkdir -pv $(ROOTFS_DIR)/var/cache/nscd
 	@rm -rf $(BUILD_DIR)/glibc-2.25
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

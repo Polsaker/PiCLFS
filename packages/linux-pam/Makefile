@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/linux-pam/Linux-PAM-1.3.0.tar.bz2
+NAME := linux-pam
+SOURCE := $(PACKAGES_DIR)/$(NAME)/Linux-PAM-1.3.0.tar.bz2
 
 staging:
 	@$(STEP) "Linux-PAM 1.3.0"
@@ -25,6 +26,7 @@ staging:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/Linux-PAM-1.3.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/Linux-PAM-1.3.0
 	@rm -rf $(BUILD_DIR)/Linux-PAM-1.3.0
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "Linux-PAM 1.3.0"
@@ -62,3 +64,4 @@ system:
 	@cp -v $(PACKAGES_DIR)/linux-pam/system-password $(ROOTFS_DIR)/etc/pam.d/
 	@cp -v $(PACKAGES_DIR)/linux-pam/other $(ROOTFS_DIR)/etc/pam.d/
 	@rm -rf $(BUILD_DIR)/Linux-PAM-1.3.0
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

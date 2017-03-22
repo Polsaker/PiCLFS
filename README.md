@@ -87,6 +87,7 @@ SUCCESS: /home/leekyuhyuk/piclfs/scripts/success.sh
 ERROR: /home/leekyuhyuk/piclfs/scripts/error.sh
 
 >> Device Settings:
+CONFIG_NAME: raspberrypi2
 CONFIG_ABI: aapcs-linux
 CONFIG_CPU: cortex-a7
 CONFIG_FPU: neon-vfpv4

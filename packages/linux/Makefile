@@ -1,3 +1,5 @@
+NAME := linux-header
+
 staging:
 	@$(STEP) "Linux 4.4.45 API Headers"
 	@cat $(PACKAGES_DIR)/linux/rpi-4.4.y.part* | tar zxf -  -C $(BUILD_DIR)
@@ -5,6 +7,7 @@ staging:
 	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=$(CONFIG_MODE) headers_check -C $(BUILD_DIR)/linux-rpi-4.4.y
 	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=arm INSTALL_HDR_PATH=$(SYSROOT_DIR)/usr headers_install -C $(BUILD_DIR)/linux-rpi-4.4.y
 	@rm -rf $(BUILD_DIR)/linux-rpi-4.4.y
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "Linux 4.4.45 API Headers"
@@ -13,6 +16,7 @@ system:
 	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=$(CONFIG_MODE) headers_check -C $(BUILD_DIR)/linux-rpi-4.4.y
 	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=arm INSTALL_HDR_PATH=$(ROOTFS_DIR)/usr headers_install -C $(BUILD_DIR)/linux-rpi-4.4.y
 	@rm -rf $(BUILD_DIR)/linux-rpi-4.4.y
+	@echo $(NAME) >> $(LOG_DIR)/system.packages
 
 kernel:
 	@$(STEP) "Linux 4.4.45 Kernel"

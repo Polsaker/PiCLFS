@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/pkgconf/pkgconf-0.9.12.tar.bz2
+NAME := pkgconf
+SOURCE := $(PACKAGES_DIR)/$(NAME)/pkgconf-0.9.12.tar.bz2
 
 toolchain:
 	@$(STEP) "Pkgconf 0.9.12"
@@ -16,3 +17,4 @@ toolchain:
 	@sed -i -e "s,@PKG_CONFIG_LIBDIR@,$(TOOLS_DIR)/usr/$(CONFIG_TARGET)/sysroot/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/$(CONFIG_TARGET)/sysroot/usr/share/pkgconfig," -e "s,@STAGING_DIR@,$(TOOLS_DIR)/usr/$(CONFIG_TARGET)/sysroot," $(TOOLS_DIR)/usr/bin/pkg-config
 	@sed -i -e "s,@STATIC@,," $(TOOLS_DIR)/usr/bin/pkg-config
 	@rm -rf $(BUILD_DIR)/pkgconf-0.9.12
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages

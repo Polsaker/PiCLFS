@@ -1,4 +1,5 @@
-SOURCE=$(PACKAGES_DIR)/bootscripts/bootscripts-embedded.tar.gz
+NAME := bootscripts
+SOURCE := $(PACKAGES_DIR)/$(NAME)/bootscripts-embedded.tar.gz
 
 system:
 	@$(STEP) "Setting Up System Bootscripts"
@@ -13,3 +14,4 @@ system:
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
 	@make DESTDIR=$(ROOTFS_DIR) install-bootscripts -C $(BUILD_DIR)/bootscripts-embedded
 	@rm -rf $(BUILD_DIR)/bootscripts-embedded
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

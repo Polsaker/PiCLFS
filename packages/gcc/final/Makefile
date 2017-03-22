@@ -1,5 +1,13 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
+NAME := gcc-final
+HOST_DEPENDENCIES := gmp mpfr gcc-initial
+TARGET_DEPENDENCIES := glibc linux-header
+
 toolchain:
 	@$(STEP) "GCC 6.3.0 - Final"
+	@$(call toolchain_dependencies, $(HOST_DEPENDENCIES))
+	@$(call staging_dependencies, $(TARGET_DEPENDENCIES))
 	@cat $(PACKAGES_DIR)/gcc/gcc-6.3.0.part* | tar jxf -  -C $(BUILD_DIR) --exclude='libjava/*' --exclude='libgo/*' --exclude='gcc/testsuite/*' --exclude='libstdc++-v3/testsuite/*'
 	@mkdir -p $(BUILD_DIR)/gcc-6.3.0/libstdc++-v3/testsuite/
 	@echo "all:" > $(BUILD_DIR)/gcc-6.3.0/libstdc++-v3/testsuite/Makefile.in
@@ -42,3 +50,4 @@ toolchain:
 	@make -j$(CONFIG_PARALLEL_JOBS) AS_FOR_TARGET="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-as" LD_FOR_TARGET="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ld" -C $(BUILD_DIR)/gcc-6.3.0/gcc-build
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/gcc-6.3.0/gcc-build
 	@rm -rf $(BUILD_DIR)/gcc-6.3.0
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages

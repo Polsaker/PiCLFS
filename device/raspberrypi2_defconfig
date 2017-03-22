@@ -1,3 +1,4 @@
+export CONFIG_NAME := raspberrypi2
 export CONFIG_ABI := aapcs-linux
 export CONFIG_CPU := cortex-a7
 export CONFIG_FPU := neon-vfpv4

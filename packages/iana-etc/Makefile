@@ -1,4 +1,5 @@
-SOURCE=$(PACKAGES_DIR)/iana-etc/iana-etc-2.30.tar.bz2
+NAME := iana-etc
+SOURCE := $(PACKAGES_DIR)/$(NAME)/iana-etc-2.30.tar.bz2
 
 system:
 	@$(STEP) "Iana-etc 2.30"
@@ -16,3 +17,4 @@ system:
 	@make -j$(CONFIG_PARALLEL_JOBS) STRIP=yes -C $(BUILD_DIR)/iana-etc-2.30
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/iana-etc-2.30
 	@rm -rf $(BUILD_DIR)/iana-etc-2.30
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

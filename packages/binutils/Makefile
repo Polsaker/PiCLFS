@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/binutils/binutils-2.28.tar.gz
+NAME := binutils
+SOURCE := $(PACKAGES_DIR)/$(NAME)/binutils-2.28.tar.gz
 
 toolchain:
 	@$(STEP) "Binutils 2.28"
@@ -23,3 +24,4 @@ toolchain:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/binutils-2.28/binutils-build
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/binutils-2.28/binutils-build
 	@rm -rf $(BUILD_DIR)/binutils-2.28
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages

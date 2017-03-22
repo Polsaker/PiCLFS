@@ -1,5 +1,6 @@
-SOURCE=$(PACKAGES_DIR)/tzdata/tzdata2016j.tar.gz
-ZONEINFO=$(ROOTFS_DIR)/usr/share/zoneinfo
+NAME := tzdata
+SOURCE := $(PACKAGES_DIR)/$(NAME)/tzdata2016j.tar.gz
+ZONEINFO := $(ROOTFS_DIR)/usr/share/zoneinfo
 
 system:
 	@$(STEP) "Tzdata2016j"
@@ -20,14 +21,15 @@ system:
 		zic -L /dev/null -d $(ZONEINFO)/posix -y "sh yearistype.sh" $${tz} ; \
 		zic -L $(BUILD_DIR)/tzdata2016j/leapseconds -d $(ZONEINFO)/right -y "sh yearistype.sh" $${tz} ; \
 	done
-	cp -v $(BUILD_DIR)/tzdata2016j/zone.tab $(ZONEINFO)
-	cp -v $(BUILD_DIR)/tzdata2016j/zone1970.tab $(ZONEINFO)
-	cp -v $(BUILD_DIR)/tzdata2016j/iso3166.tab $(ZONEINFO)
-	zic -d $(ZONEINFO) -p America/New_York
+	@cp -v $(BUILD_DIR)/tzdata2016j/zone.tab $(ZONEINFO)
+	@cp -v $(BUILD_DIR)/tzdata2016j/zone1970.tab $(ZONEINFO)
+	@cp -v $(BUILD_DIR)/tzdata2016j/iso3166.tab $(ZONEINFO)
+	@zic -d $(ZONEINFO) -p America/New_York
 	@if ! [ -f $(ROOTFS_DIR)/usr/share/zoneinfo/$(CONFIG_LOCAL_TIMEZONE) ] ; then \
 	    echo "Seems like your timezone won't work out. Defaulting to Seoul. Either fix it yourself later or consider moving there." ; \
 	    cp -v $(ROOTFS_DIR)/usr/share/zoneinfo/Asia/Seoul $(ROOTFS_DIR)/etc/localtime ; \
 	else \
 	    cp -v $(ROOTFS_DIR)/usr/share/zoneinfo/$(CONFIG_LOCAL_TIMEZONE) $(ROOTFS_DIR)/etc/localtime ; \
 	fi;
-	rm -rf $(BUILD_DIR)/tzdata2016j
+	@rm -rf $(BUILD_DIR)/tzdata2016j
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

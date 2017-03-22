@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/gmp/gmp-6.1.2.tar.xz
+NAME := gmp
+SOURCE := $(PACKAGES_DIR)/$(NAME)/gmp-6.1.2.tar.xz
 
 toolchain:
 	@$(STEP) "GMP 6.1.2"
@@ -8,3 +9,4 @@ toolchain:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gmp-6.1.2
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/gmp-6.1.2
 	@rm -rf $(BUILD_DIR)/gmp-6.1.2
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages

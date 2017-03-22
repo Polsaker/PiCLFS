@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/openssl/openssl-1.0.2k.tar.gz
+NAME := openssl
+SOURCE := $(PACKAGES_DIR)/$(NAME)/openssl-1.0.2k.tar.gz
 
 staging:
 	@$(STEP) "Openssl 1.0.2k"
@@ -25,6 +26,7 @@ staging:
 	@make -j1 -C $(BUILD_DIR)/openssl-1.0.2k
 	@make -j1 INSTALL_PREFIX=$(SYSROOT_DIR) install -C $(BUILD_DIR)/openssl-1.0.2k
 	@rm -rf $(BUILD_DIR)/openssl-1.0.2k
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "Openssl 1.0.2k"
@@ -51,3 +53,4 @@ system:
 	@make -j1 -C $(BUILD_DIR)/openssl-1.0.2k
 	@make -j1 INSTALL_PREFIX=$(ROOTFS_DIR) install -C $(BUILD_DIR)/openssl-1.0.2k
 	@rm -rf $(BUILD_DIR)/openssl-1.0.2k
+	@echo $(NAME) >> $(LOG_DIR)/system.packages

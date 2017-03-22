@@ -8,6 +8,7 @@ export CONFIG_PKG_VERSION := PiCLFS 2017.03
 export CONFIG_BUG_URL := https://github.com/LeeKyuHyuk/PiCLFS/issues
 export CONFIG_PARALLEL_JOBS := $(shell echo `cat /proc/cpuinfo | grep cores | wc -l `)
 export WORKSPACE_DIR := $(shell pwd)
+export LOG_DIR := $(WORKSPACE_DIR)/log
 export PACKAGES_DIR := $(WORKSPACE_DIR)/packages
 export SCRIPTS_DIR := $(WORKSPACE_DIR)/scripts
 export OUTPUT_DIR := $(WORKSPACE_DIR)/out

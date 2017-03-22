@@ -27,7 +27,8 @@ toolchain:
 	@make check
 	@$(STEP) "Create toolchain directory."
 	@rm -rf $(BUILD_DIR) $(TOOLS_DIR)
-	@mkdir -pv $(BUILD_DIR) $(TOOLS_DIR)
+	@mkdir -pv $(LOG_DIR) $(BUILD_DIR) $(TOOLS_DIR)
+	@rm -rf $(LOG_DIR)/toolchain.packages
 	@make staging -C $(PACKAGES_DIR)/skeleton
 	@make toolchain -C $(PACKAGES_DIR)/file
 	@make toolchain -C $(PACKAGES_DIR)/gawk
@@ -58,8 +59,9 @@ toolchain:
 toolchain-staging:
 	@make check
 	@rm -rf $(BUILD_DIR)
-	@mkdir -pv $(BUILD_DIR)
-	@make staging -C $(PACKAGES_DIR)/gcc
+	@mkdir -pv $(LOG_DIR) $(BUILD_DIR)
+	@rm -rf $(LOG_DIR)/staging.packages
+	@make staging-libs -C $(PACKAGES_DIR)/gcc
 	@make staging -C $(PACKAGES_DIR)/libcap
 	@make staging -C $(PACKAGES_DIR)/ncurses
 	@make staging -C $(PACKAGES_DIR)/zlib
@@ -70,9 +72,10 @@ system:
 	@make check
 	@$(STEP) "Create toolchain directory."
 	@rm -rf $(BUILD_DIR) $(ROOTFS_DIR)
-	@mkdir -pv $(BUILD_DIR) $(ROOTFS_DIR)
+	@mkdir -pv $(LOG_DIR) $(BUILD_DIR) $(ROOTFS_DIR)
+	@rm -rf $(LOG_DIR)/system.packages
 	@make system -C $(PACKAGES_DIR)/skeleton
-	@make system -C $(PACKAGES_DIR)/gcc
+	@make system-libs -C $(PACKAGES_DIR)/gcc
 	@make system -C $(PACKAGES_DIR)/linux
 	@make system -C $(PACKAGES_DIR)/busybox
 	@make system -C $(PACKAGES_DIR)/iana-etc
@@ -191,6 +194,7 @@ settings:
 	@echo -e '\e[1mERROR:\e[0m $(ERROR)'
 	@echo
 	@echo -e '\e[1m\e[31m>> Device Settings:\e[0m'
+	@echo -e '\e[1mCONFIG_NAME:\e[0m $(CONFIG_NAME)'
 	@echo -e '\e[1mCONFIG_ABI:\e[0m $(CONFIG_ABI)'
 	@echo -e '\e[1mCONFIG_CPU:\e[0m $(CONFIG_CPU)'
 	@echo -e '\e[1mCONFIG_FPU:\e[0m $(CONFIG_FPU)'
@@ -206,6 +210,6 @@ flash:
 	@sudo -k
 
 clean:
-	@rm -rf device.mk out
+	@rm -rf device.mk $(OUTPUT_DIR) $(LOG_DIR)
 
 .PHONY: toolchain toolchain-staging system kernel image clean

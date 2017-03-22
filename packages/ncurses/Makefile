@@ -1,4 +1,5 @@
-SOURCE := $(PACKAGES_DIR)/ncurses/ncurses-6.0.tar.gz
+NAME := ncurses
+SOURCE := $(PACKAGES_DIR)/$(NAME)/ncurses-6.0.tar.gz
 
 toolchain:
 	@$(STEP) "Ncurses 6.0"
@@ -9,6 +10,7 @@ toolchain:
 	@make -j$(CONFIG_PARALLEL_JOBS) tic -C $(BUILD_DIR)/ncurses-6.0/progs
 	@install -v -m755 $(BUILD_DIR)/ncurses-6.0/progs/tic $(TOOLS_DIR)/usr/bin
 	@rm -rf $(BUILD_DIR)/ncurses-6.0
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages
 
 staging:
 	@$(STEP) "Ncurses 6.0"
@@ -46,6 +48,7 @@ staging:
 	echo "INPUT(-lncursesw)" > $(SYSROOT_DIR)/usr/lib/libcursesw.so
 	ln -sfv libncurses.so      $(SYSROOT_DIR)/usr/lib/libcurses.so
 	@rm -rf $(BUILD_DIR)/ncurses-6.0
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "Ncurses 6.0"
@@ -83,3 +86,4 @@ system:
 	echo "INPUT(-lncursesw)" > $(ROOTFS_DIR)/usr/lib/libcursesw.so
 	ln -sfv libncurses.so      $(ROOTFS_DIR)/usr/lib/libcurses.so
 	@rm -rf $(BUILD_DIR)/ncurses-6.0
+	@echo $(NAME) >> $(LOG_DIR)/system.packages
