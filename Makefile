@@ -116,14 +116,26 @@ image:
 	@$(TOOLS_DIR)/usr/bin/fakeroot -- $(BUILD_DIR)/_fakeroot.fs
 	@ln -svf rootfs.ext2 $(IMAGES_DIR)/rootfs.ext4
 	@mkdir -p $(IMAGES_DIR)/kernel-marked
-	@cp -v $(KERNEL_DIR)/bcm2709-rpi-2-b.dtb $(IMAGES_DIR)
+	@for dtb in $(CONFIG_LINUX_KERNEL_INTREE_DTS_NAME) ; do \
+		cp -v $(KERNEL_DIR)/$${dtb}.dtb $(IMAGES_DIR) ; \
+	done
 	@$(TOOLS_DIR)/usr/bin/mkknlimg $(KERNEL_DIR)/zImage $(IMAGES_DIR)/kernel-marked/zImage
 	@cat $(PACKAGES_DIR)/firmware/rpi-firmware.part* | tar zxf -  -C $(BUILD_DIR)
 	@mkdir -v $(IMAGES_DIR)/rpi-firmware
 	@install -Dv -m 0644 $(BUILD_DIR)/firmware-master/boot/bootcode.bin $(IMAGES_DIR)/rpi-firmware/bootcode.bin
 	@install -Dv -m 0644 $(BUILD_DIR)/firmware-master/boot/start"".elf $(IMAGES_DIR)/rpi-firmware/start.elf
 	@install -Dv -m 0644 $(BUILD_DIR)/firmware-master/boot/fixup"".dat $(IMAGES_DIR)/rpi-firmware/fixup.dat
+	@if [ "$(CONFIG_NAME)" = "raspberrypi3" ] ; then \
+   cp -Rv $(BUILD_DIR)/firmware-master/boot/overlays $(IMAGES_DIR)/rpi-firmware/overlays; \
+	fi;
 	@install -Dv -m 0644 $(PACKAGES_DIR)/firmware/config.txt $(IMAGES_DIR)/rpi-firmware/config.txt
+	@if [ "$(CONFIG_NAME)" = "raspberrypi3" ] ; then \
+		if ! grep -qE '^dtoverlay=' "$(IMAGES_DIR)/rpi-firmware/config.txt" ; then \
+			$(STEP) "Adding 'dtoverlay=pi3-miniuart-bt' to config.txt (fixes ttyAMA0 serial console)." ; \
+			echo "# fixes rpi3 ttyAMA0 serial console" >> $(IMAGES_DIR)/rpi-firmware/config.txt ; \
+			echo "dtoverlay=pi3-miniuart-bt" >> $(IMAGES_DIR)/rpi-firmware/config.txt ; \
+		fi ; \
+	fi;
 	@echo "dwc_otg.lpm_enable=0 console=ttyAMA0,115200 root=/dev/mmcblk0p2 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait ip=dhcp rootdelay=5" > $(IMAGES_DIR)/rpi-firmware/cmdline.txt
 	rm -rf $(BUILD_DIR)/firmware-master
 	@$(TOOLS_DIR)/usr/bin/genimage \
@@ -131,7 +143,7 @@ image:
   --tmppath "$(BUILD_DIR)/genimage.tmp" \
   --inputpath "$(IMAGES_DIR)" \
   --outputpath "$(IMAGES_DIR)" \
-  --config "$(WORKSPACE_DIR)/support/genimage/raspberrypi2.cfg"
+  --config "$(WORKSPACE_DIR)/support/genimage/$(CONFIG_NAME).cfg"
 
 %_defconfig:
 	@if [ -f device/$@ ] ; then \

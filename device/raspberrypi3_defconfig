@@ -1,0 +1,8 @@
+export CONFIG_NAME := raspberrypi3
+export CONFIG_ABI := aapcs-linux
+export CONFIG_CPU := cortex-a53
+export CONFIG_FPU := neon-fp-armv8
+export CONFIG_FLOAT := hard
+export CONFIG_MODE := arm
+export CONFIG_LINUX_KERNEL_DEFCONFIG := bcm2709
+export CONFIG_LINUX_KERNEL_INTREE_DTS_NAME := bcm2710-rpi-3-b bcm2710-rpi-cm3
