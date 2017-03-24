@@ -1,6 +1,16 @@
 include piclfs.mk
 -include device.mk
 
+START_BUILD_TIME := $(shell date +%s)
+define PRINT_BUILD_TIME
+@time_end=`date +%s` ; time_exec=`awk -v "TS=${START_BUILD_TIME}" -v "TE=$$time_end" 'BEGIN{TD=TE-TS;printf "%02dh:%02dm:%02ds\n",TD/(60*60)%24,TD/(60)%60,TD%60}'` ; $(STEP) "'$@' Build Time: $${time_exec}"
+endef
+
+START_TOTAL_BUILD_TIME := $(shell date +%s)
+define PRINT_TOTAL_BUILD_TIME
+@time_end=`date +%s` ; time_exec=`awk -v "TS=${START_TOTAL_BUILD_TIME}" -v "TE=$$time_end" 'BEGIN{TD=TE-TS;printf "%02dh:%02dm:%02ds\n",TD/(60*60)%24,TD/(60)%60,TD%60}'` ; $(STEP) "Total Build Time: $${time_exec}"
+endef
+
 help:
 	@scripts/banner.sh
 	@echo
@@ -21,7 +31,14 @@ help:
 	@echo -e '    \e[1mflash\e[0m                  - Flash an SD Card'
 	@echo
 
-all: check settings toolchain system kernel image
+all:
+	@make check
+	@make settings
+	@make toolchain
+	@make system
+	@make kernel
+	@make image
+	$(PRINT_TOTAL_BUILD_TIME)
 
 toolchain:
 	@make check
@@ -55,6 +72,7 @@ toolchain:
 	@make toolchain -C $(PACKAGES_DIR)/mkpasswd
 	@make toolchain -C $(PACKAGES_DIR)/zlib
 	@make toolchain-staging
+	$(PRINT_BUILD_TIME)
 
 toolchain-staging:
 	@make check
@@ -67,6 +85,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/zlib
 	@make staging -C $(PACKAGES_DIR)/openssl
 	@make staging -C $(PACKAGES_DIR)/linux-pam
+	$(PRINT_BUILD_TIME)
 
 system:
 	@make check
@@ -88,12 +107,14 @@ system:
 	@make system -C $(PACKAGES_DIR)/linux-pam
 	@make system -C $(PACKAGES_DIR)/zlib
 	@make system -C $(PACKAGES_DIR)/glibc
+	$(PRINT_BUILD_TIME)
 
 kernel:
 	@make check
 	@rm -rf $(BUILD_DIR) $(KERNEL_DIR)
 	@mkdir -pv $(BUILD_DIR) $(KERNEL_DIR)
 	@make kernel -C $(PACKAGES_DIR)/linux
+	$(PRINT_BUILD_TIME)
 
 image:
 	@make check
@@ -144,6 +165,7 @@ image:
   --inputpath "$(IMAGES_DIR)" \
   --outputpath "$(IMAGES_DIR)" \
   --config "$(WORKSPACE_DIR)/support/genimage/$(CONFIG_NAME).cfg"
+	$(PRINT_BUILD_TIME)
 
 %_defconfig:
 	@if [ -f device/$@ ] ; then \
@@ -220,8 +242,10 @@ flash:
 	@install -Dv -m 0755 $(WORKSPACE_DIR)/scripts/image-usb-stick $(TOOLS_DIR)/usr/bin/image-usb-stick
 	@sudo $(TOOLS_DIR)/usr/bin/image-usb-stick $(IMAGES_DIR)/sdcard.img
 	@sudo -k
+	$(PRINT_BUILD_TIME)
 
 clean:
 	@rm -rf device.mk $(OUTPUT_DIR) $(LOG_DIR)
+	$(PRINT_BUILD_TIME)
 
 .PHONY: toolchain toolchain-staging system kernel image clean
