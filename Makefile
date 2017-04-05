@@ -102,6 +102,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/tzdata
 	@make system -C $(PACKAGES_DIR)/libcap
 	@make system -C $(PACKAGES_DIR)/openssl
+	@make system -C $(PACKAGES_DIR)/openssh
 	@make system -C $(PACKAGES_DIR)/ntp
 	@make system -C $(PACKAGES_DIR)/ncurses
 	@make system -C $(PACKAGES_DIR)/linux-pam
