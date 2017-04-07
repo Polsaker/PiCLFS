@@ -26,7 +26,7 @@ staging:
 	@make HOSTPYTHON=$(BUILD_DIR)/Python-2.7.3/hostpython HOSTPGEN=$(BUILD_DIR)/Python-2.7.3/Parser/hostpgen -C $(BUILD_DIR)/Python-2.7.3 BLDSHARED="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc -shared" CROSS_COMPILE=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)- CROSS_COMPILE_TARGET=yes HOSTARCH=arm-linux BUILDARCH=$(CONFIG_HOST) -C $(BUILD_DIR)/Python-2.7.3
 	@make install HOSTPYTHON=$(BUILD_DIR)/Python-2.7.3/hostpython BLDSHARED="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc -shared" CROSS_COMPILE=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)- CROSS_COMPILE_TARGET=yes prefix=$(SYSROOT_DIR) -C $(BUILD_DIR)/Python-2.7.3
 	@rm -rf $(BUILD_DIR)/Python-2.7.3
-	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "Python 2.7.3"
@@ -50,4 +50,4 @@ system:
 	@make HOSTPYTHON=$(BUILD_DIR)/Python-2.7.3/hostpython HOSTPGEN=$(BUILD_DIR)/Python-2.7.3/Parser/hostpgen -C $(BUILD_DIR)/Python-2.7.3 BLDSHARED="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc -shared" CROSS_COMPILE=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)- CROSS_COMPILE_TARGET=yes HOSTARCH=arm-linux BUILDARCH=$(CONFIG_HOST) -C $(BUILD_DIR)/Python-2.7.3
 	@make install HOSTPYTHON=$(BUILD_DIR)/Python-2.7.3/hostpython BLDSHARED="$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc -shared" CROSS_COMPILE=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)- CROSS_COMPILE_TARGET=yes prefix=$(SYSROOT_DIR) -C $(BUILD_DIR)/Python-2.7.3
 	@rm -rf $(BUILD_DIR)/Python-2.7.3
-	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages
+	@echo $(NAME) >> $(LOG_DIR)/system.packages
