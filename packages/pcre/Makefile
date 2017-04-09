@@ -17,15 +17,14 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
-	--prefix=/usr \
-	--docdir=/usr/share/doc/pcre-8.40 \
+	--prefix=$(SYSROOT_DIR)/usr \
 	--enable-unicode-properties \
 	--enable-pcre16 \
 	--enable-pcre32 \
 	--enable-pcregrep-libz \
 	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pcre-8.40
-	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/pcre-8.40
+	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pcre-8.40
 	@rm -rf $(BUILD_DIR)/pcre-8.40
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 

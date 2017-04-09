@@ -28,7 +28,7 @@ system:
 	--with-yielding-select=yes \
 	--with-lineeditlibs=readline \
 	--docdir=/usr/share/doc/ntp-4.2.8p9 )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/ntp-4.2.8p9
+	@make -j1 -C $(BUILD_DIR)/ntp-4.2.8p9
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/ntp-4.2.8p9
 	@cp -v $(PACKAGES_DIR)/ntp/ntp.conf $(ROOTFS_DIR)/etc/ntp.conf
 	@cp -v $(PACKAGES_DIR)/ntp/ntp $(ROOTFS_DIR)/etc/rc.d/init.d/ntp

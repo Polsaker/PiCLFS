@@ -21,9 +21,9 @@ toolchain:
 staging:
 	@$(STEP) "Zlib 1.2.11"
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
-	@( cd $(BUILD_DIR)/zlib-1.2.11 && CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc ./configure --prefix=/usr )
+	@( cd $(BUILD_DIR)/zlib-1.2.11 && CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc ./configure --prefix=$(SYSROOT_DIR)/usr )
 	@make -j1 -C $(BUILD_DIR)/zlib-1.2.11
-	@make -j1 DESTDIR=$(SYSROOT_DIR) LDCONFIG=true install -C $(BUILD_DIR)/zlib-1.2.11
+	@make -j1 LDCONFIG=true install -C $(BUILD_DIR)/zlib-1.2.11
 	@rm -rf $(BUILD_DIR)/zlib-1.2.11
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 

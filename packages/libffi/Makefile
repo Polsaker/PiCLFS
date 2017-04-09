@@ -18,10 +18,10 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
-	--prefix=/usr \
+	--prefix=$(SYSROOT_DIR)/usr \
 	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libffi-3.2.1
-	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/libffi-3.2.1
+	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libffi-3.2.1
 	@rm -rf $(BUILD_DIR)/libffi-3.2.1
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
