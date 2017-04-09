@@ -10,7 +10,7 @@ Debian 8.6 or Ubuntu 16.04 is recommended.
 
 ``` bash
 sudo apt update
-sudo apt install g++ libncurses5-dev intltool
+sudo apt install g++ libncurses5-dev intltool gperf
 ```
 
 ### Build PiCLFS
