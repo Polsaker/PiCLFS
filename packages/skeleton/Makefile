@@ -67,6 +67,8 @@ system:
 	@cp -v $(PACKAGES_DIR)/skeleton/fstab $(ROOTFS_DIR)/etc/fstab
 	@$(STEP) "Creating /etc/profile"
 	@cp -v $(PACKAGES_DIR)/skeleton/profile $(ROOTFS_DIR)/etc/profile
+	@$(STEP) "Creating /etc/profile.d"
+	@mkdir -p $(ROOTFS_DIR)/etc/profile.d
 	@$(STEP) "Creating /etc/inittab"
 	@cp -v $(PACKAGES_DIR)/skeleton/inittab $(ROOTFS_DIR)/etc/inittab
 	@$(STEP) "Setting hostname"
