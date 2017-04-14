@@ -76,3 +76,5 @@ https://www.x.org/pub/individual/lib/libXau-1.0.8.tar.bz2
 http://xcb.freedesktop.org/dist/xcb-proto-1.12.tar.bz2
 http://www.linuxfromscratch.org/patches/blfs/svn/xcb-proto-1.12-schema-1.patch
 http://www.linuxfromscratch.org/patches/blfs/svn/xcb-proto-1.12-python3-1.patch
+http://xcb.freedesktop.org/dist/libxcb-1.12.tar.bz2
+http://www.linuxfromscratch.org/patches/blfs/svn/libxcb-1.12-python3-1.patch
