@@ -25,6 +25,7 @@ staging:
 	@touch $(SYSROOT_DIR)/usr/include/gnu/stubs.h
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/glibc-2.25/glibc-build
 	@make -j$(CONFIG_PARALLEL_JOBS) install_root=$(SYSROOT_DIR) install -C $(BUILD_DIR)/glibc-2.25/glibc-build
+	@echo "#include <gnu/stubs-hard.h>" > $(SYSROOT_DIR)/usr/include/gnu/stubs.h
 	@cp -v $(PACKAGES_DIR)/glibc/ld.so.conf $(SYSROOT_DIR)/etc/ld.so.conf
 	@cp -v $(BUILD_DIR)/glibc-2.25/nscd/nscd.conf $(SYSROOT_DIR)/etc/nscd.conf
 	@mkdir -pv $(SYSROOT_DIR)/var/cache/nscd
