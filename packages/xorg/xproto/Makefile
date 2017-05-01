@@ -23,9 +23,9 @@ staging:
 	 	--prefix=$(SYSROOT_DIR)/usr \
 		--sysconfdir=/etc \
 		--localstatedir=/var \
-		--disable-static ) ; \
-		make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/$${xproto} ; \
-		make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/$${xproto} ; \
+		--disable-static ) || exit 1; \
+		make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/$${xproto} || exit 1; \
+		make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/$${xproto} || exit 1; \
 		rm -rf $(BUILD_DIR)/$${xproto} ; \
 	done
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
@@ -51,9 +51,9 @@ system:
 	 	--prefix=/usr \
 		--sysconfdir=/etc \
 		--localstatedir=/var \
-		--disable-static ) ; \
-		make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/$${xproto} ; \
-		make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/$${xproto} ; \
+		--disable-static ) || exit 1; \
+		make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/$${xproto} || exit 1; \
+		make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/$${xproto} || exit 1; \
 		rm -rf $(BUILD_DIR)/$${xproto} ; \
 	done
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
