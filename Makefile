@@ -110,6 +110,9 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/libxcb
 	@make staging -C $(PACKAGES_DIR)/xorg/xlib
 	@make staging -C $(PACKAGES_DIR)/gdk-pixbuf
+	@make staging -C $(PACKAGES_DIR)/pixman
+	@make staging -C $(PACKAGES_DIR)/cairo
+	@make staging -C $(PACKAGES_DIR)/pango
 	@make staging -C $(PACKAGES_DIR)/libfm-extra
 	@make staging -C $(PACKAGES_DIR)/menu-cache
 	$(PRINT_BUILD_TIME)
@@ -155,6 +158,9 @@ system:
 	@make system -C $(PACKAGES_DIR)/libxcb
 	@make system -C $(PACKAGES_DIR)/xorg/xlib
 	@make system -C $(PACKAGES_DIR)/gdk-pixbuf
+	@make system -C $(PACKAGES_DIR)/pixman
+	@make system -C $(PACKAGES_DIR)/cairo
+	@make system -C $(PACKAGES_DIR)/pango
 	@make system -C $(PACKAGES_DIR)/lxmenu-data
 	@make system -C $(PACKAGES_DIR)/libfm-extra
 	@make system -C $(PACKAGES_DIR)/menu-cache
