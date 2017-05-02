@@ -100,6 +100,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/libpng
 	@make staging -C $(PACKAGES_DIR)/libtiff
 	@make staging -C $(PACKAGES_DIR)/libxml2
+	@make staging -C $(PACKAGES_DIR)/icu
 	@make staging -C $(PACKAGES_DIR)/freetype
 	@make staging -C $(PACKAGES_DIR)/fontconfig
 	@make staging -C $(PACKAGES_DIR)/util-macros
@@ -144,6 +145,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/libpng
 	@make system -C $(PACKAGES_DIR)/libtiff
 	@make system -C $(PACKAGES_DIR)/libxml2
+	@make system -C $(PACKAGES_DIR)/icu
 	@make system -C $(PACKAGES_DIR)/freetype
 	@make system -C $(PACKAGES_DIR)/fontconfig
 	@make system -C $(PACKAGES_DIR)/util-macros
