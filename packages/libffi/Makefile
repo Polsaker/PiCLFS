@@ -40,7 +40,6 @@ staging:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
-	@patch -Np0 -i $(PACKAGES_DIR)/libffi/libffi-3.2.1-includedir.patch -d $(BUILD_DIR)/libffi-3.2.1
 	@( cd $(BUILD_DIR)/libffi-3.2.1 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
@@ -50,6 +49,9 @@ staging:
 	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libffi-3.2.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libffi-3.2.1
+	@mv $(SYSROOT_DIR)/usr/lib/libffi-3.2.1/include/*.h $(SYSROOT_DIR)/usr/include/
+	@sed -i -e '/^includedir.*/d' -e '/^Cflags:.*/d' $(SYSROOT_DIR)/usr/lib/pkgconfig/libffi.pc
+	@rm -rf $(SYSROOT_DIR)/usr/lib/libffi-*
 	@rm -rf $(BUILD_DIR)/libffi-3.2.1
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
@@ -64,7 +66,6 @@ system:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
-	@patch -Np0 -i $(PACKAGES_DIR)/libffi/libffi-3.2.1-includedir.patch -d $(BUILD_DIR)/libffi-3.2.1
 	@( cd $(BUILD_DIR)/libffi-3.2.1 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
@@ -74,5 +75,8 @@ system:
 	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libffi-3.2.1
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libffi-3.2.1
+	@mv $(ROOTFS_DIR)/usr/lib/libffi-3.2.1/include/*.h $(ROOTFS_DIR)/usr/include/
+	@sed -i -e '/^includedir.*/d' -e '/^Cflags:.*/d' $(ROOTFS_DIR)/usr/lib/pkgconfig/libffi.pc
+	@rm -rf $(ROOTFS_DIR)/usr/lib/libffi-*
 	@rm -rf $(BUILD_DIR)/libffi-3.2.1
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
