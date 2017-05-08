@@ -2,7 +2,50 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := python
 SOURCE := $(PACKAGES_DIR)/$(NAME)/Python-2.7.3.tar.xz
+HOST_DEPENDENCIES := libffi
 TARGET_DEPENDENCIES := libffi
+
+toolchain:
+	@$(STEP) "Python 2.7.3"
+	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
+	@$(call toolchain_dependencies, $(HOST_DEPENDENCIES))
+	@( cd $(BUILD_DIR)/Python-2.7.3 && \
+	CFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
+	CPPFLAGS="-I$(TOOLS_DIR)/usr/include" \
+	CXXFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
+	LDFLAGS="-L$(TOOLS_DIR)/lib -L$(TOOLS_DIR)/usr/lib -Wl,-rpath,$(TOOLS_DIR)/usr/lib -Wl,--enable-new-dtags" \
+	PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" \
+	PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" \
+	PKG_CONFIG_SYSROOT_DIR="/" \
+	PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 \
+	PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
+	ac_cv_prog_HAS_HG=/bin/false \
+	ac_cv_prog_SVNVERSION=/bin/false \
+	./configure \
+	--prefix=$(TOOLS_DIR)/usr \
+	--sysconfdir=$(TOOLS_DIR)/etc \
+	--localstatedir=$(TOOLS_DIR)/var \
+	--enable-static \
+	--without-cxx-main \
+	--disable-sqlite3 \
+	--disable-tk \
+	--with-expat=system \
+	--disable-curses \
+	--disable-codecs-cjk \
+	--disable-nis \
+	--enable-unicodedata \
+	--disable-dbm \
+	--disable-gdbm \
+	--disable-bsddb \
+	--disable-test-modules \
+	--disable-bz2 \
+	--disable-ssl \
+	--disable-ossaudiodev \
+	--disable-pyo-build )
+	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/Python-2.7.3
+	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/Python-2.7.3
+	@rm -rf $(BUILD_DIR)/Python-2.7.3
+	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages
 
 staging:
 	@$(STEP) "Python 2.7.3"
