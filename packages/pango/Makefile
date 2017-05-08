@@ -1,6 +1,9 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := pango
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pango-1.40.5.tar.xz
-TARGET_DEPENDENCIES := fontconfig freetype harfbuzz glib xlib
+HOST_DEPENDENCIES := fontconfig freetype harfbuzz glib cairo
+TARGET_DEPENDENCIES := fontconfig freetype harfbuzz glib
 
 staging:
 	@$(STEP) "Pango 1.40.5"
@@ -21,7 +24,11 @@ staging:
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=$(SYSROOT_DIR)/etc \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-explicit-deps=no \
+	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
+	--x-libraries=$(SYSROOT_DIR)/usr/lib )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pango-1.40.5
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pango-1.40.5
 	@rm -rf $(BUILD_DIR)/pango-1.40.5
@@ -46,7 +53,11 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--sysconfdir=/etc \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-explicit-deps=no \
+	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
+	--x-libraries=$(SYSROOT_DIR)/usr/lib )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pango-1.40.5
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pango-1.40.5
 	@rm -rf $(BUILD_DIR)/pango-1.40.5
