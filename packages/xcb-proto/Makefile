@@ -3,7 +3,6 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 NAME := xcb-proto
 SOURCE := $(PACKAGES_DIR)/$(NAME)/xcb-proto-1.12.tar.bz2
 HOST_DEPENDENCIES := python
-TARGET_DEPENDENCIES := python
 
 toolchain:
 	@$(STEP) "Xcb-proto 1.12"
@@ -33,7 +32,6 @@ toolchain:
 
 staging:
 	@$(STEP) "Xcb-proto 1.12"
-	@$(call staging_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -52,7 +50,8 @@ staging:
  	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xcb-proto-1.12
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/xcb-proto-1.12
 	@rm -rf $(BUILD_DIR)/xcb-proto-1.12
@@ -60,7 +59,6 @@ staging:
 
 system:
 	@$(STEP) "Xcb-proto 1.12"
-	@$(call system_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -79,7 +77,8 @@ system:
  	--prefix=/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xcb-proto-1.12
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/xcb-proto-1.12
 	@rm -rf $(BUILD_DIR)/xcb-proto-1.12
