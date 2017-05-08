@@ -22,14 +22,14 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
- 	--prefix=$(SYSROOT_DIR)/usr \
+ 	--prefix=/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
 	--disable-static \
-	--enable-xinput \
-	--without-doxygen )
+	--enable-shared \
+	--with-doxygen=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libxcb-1.12
-	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libxcb-1.12
+	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/libxcb-1.12
 	@rm -rf $(BUILD_DIR)/libxcb-1.12
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
@@ -55,9 +55,8 @@ system:
 	--sysconfdir=/etc \
 	--localstatedir=/var \
 	--disable-static \
-	--enable-xinput \
-	--without-doxygen \
-	--docdir=/usr/share/doc/libxcb-1.12 )
+	--enable-shared \
+	--with-doxygen=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libxcb-1.12
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libxcb-1.12
 	@rm -rf $(BUILD_DIR)/libxcb-1.12
