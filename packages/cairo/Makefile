@@ -21,7 +21,26 @@ staging:
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
 	--disable-static \
-	--enable-tee )
+	--enable-shared \
+	--enable-trace=no \
+	--enable-interpreter=no \
+	--disable-directfb \
+	--enable-ft \
+	--enable-gobject \
+	--disable-gl \
+	--disable-glesv2 \
+	--disable-vg \
+	--enable-xlib \
+	--enable-xcb \
+	--with-x \
+	--enable-xlib-xrender \
+	--enable-ps \
+	--enable-pdf \
+	--enable-png \
+	--disable-script \
+	--enable-svg \
+	--enable-tee \
+	--disable-xml )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/cairo-1.14.8
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/cairo-1.14.8
 	@rm -rf $(BUILD_DIR)/cairo-1.14.8
@@ -46,7 +65,26 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--disable-static \
-	--enable-tee )
+	--enable-shared \
+	--enable-trace=no \
+	--enable-interpreter=no \
+	--disable-directfb \
+	--enable-ft \
+	--enable-gobject \
+	--disable-gl \
+	--disable-glesv2 \
+	--disable-vg \
+	--enable-xlib \
+	--enable-xcb \
+	--with-x \
+	--enable-xlib-xrender \
+	--enable-ps \
+	--enable-pdf \
+	--enable-png \
+	--disable-script \
+	--enable-svg \
+	--enable-tee \
+	--disable-xml )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/cairo-1.14.8
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/cairo-1.14.8
 	@rm -rf $(BUILD_DIR)/cairo-1.14.8
