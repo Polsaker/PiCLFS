@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := fontconfig
 SOURCE := $(PACKAGES_DIR)/$(NAME)/fontconfig-2.12.1.tar.bz2
-TARGET_DEPENDENCIES := libxml2 freetype
+TARGET_DEPENDENCIES := freetype expat
 
 staging:
 	@$(STEP) "Fontconfig 2.12.1"
@@ -24,7 +24,10 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--enable-libxml2 \
+	--disable-static \
+	--enable-shared \
+	--with-arch=$(CONFIG_TARGET) \
+	--with-cache-dir=$(SYSROOT_DIR)/var/cache/fontconfig \
 	--disable-docs )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/fontconfig-2.12.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/fontconfig-2.12.1
@@ -51,11 +54,11 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--sysconfdir=/etc \
-	--localstatedir=/var \
-	--enable-libxml2 \
-	--disable-docs \
-	--docdir=/usr/share/doc/fontconfig-2.12.1 )
+	--disable-static \
+	--enable-shared \
+	--with-arch=$(CONFIG_TARGET) \
+	--with-cache-dir=/var/cache/fontconfig \
+	--disable-docs )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/fontconfig-2.12.1
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/fontconfig-2.12.1
 	@rm -rf $(BUILD_DIR)/fontconfig-2.12.1
