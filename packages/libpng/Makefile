@@ -1,5 +1,8 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := libpng
 SOURCE := $(PACKAGES_DIR)/$(NAME)/libpng-1.6.29.tar.xz
+TARGET_DEPENDENCIES := zlib
 
 staging:
 	@$(STEP) "libpng 1.6.29"
@@ -21,7 +24,9 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-arm-neon=yes )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libpng-1.6.29
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libpng-1.6.29
 	@rm -rf $(BUILD_DIR)/libpng-1.6.29
@@ -47,7 +52,9 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-arm-neon=yes )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libpng-1.6.29
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libpng-1.6.29
 	@rm -rf $(BUILD_DIR)/libpng-1.6.29
