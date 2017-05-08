@@ -17,13 +17,13 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
- 	--prefix=/usr \
-	--sysconfdir=/etc \
-	--localstatedir=/var \
+ 	--prefix=$(SYSROOT_DIR)/usr \
+	--sysconfdir=$(SYSROOT_DIR)/etc \
+	--localstatedir=$(SYSROOT_DIR)/var \
 	--disable-static \
 	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xtrans-1.3.5
-	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/xtrans-1.3.5
+	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/xtrans-1.3.5
 	@rm -rf $(BUILD_DIR)/xtrans-1.3.5
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 

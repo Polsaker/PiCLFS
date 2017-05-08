@@ -22,7 +22,8 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/menu-cache-1.0.2
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/menu-cache-1.0.2
 	@rm -rf $(BUILD_DIR)/menu-cache-1.0.2
@@ -46,7 +47,8 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/menu-cache-1.0.2
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/menu-cache-1.0.2
 	@rm -rf $(BUILD_DIR)/menu-cache-1.0.2

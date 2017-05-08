@@ -1,6 +1,6 @@
 NAME := harfbuzz
 SOURCE := $(PACKAGES_DIR)/$(NAME)/harfbuzz-1.4.6.tar.bz2
-TARGET_DEPENDENCIES := glib icu freetype
+TARGET_DEPENDENCIES := glib freetype
 
 staging:
 	@$(STEP) "HarfBuzz 1.4.6"
@@ -21,7 +21,14 @@ staging:
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
 	--disable-static \
-	--with-gobject )
+	--enable-shared \
+	--with-coretext=no \
+	--with-uniscribe=no \
+	--with-cairo=yes \
+	--with-freetype=yes \
+	--with-graphite2=no \
+	--with-glib=yes \
+	--with-icu=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/harfbuzz-1.4.6
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/harfbuzz-1.4.6
 	@rm -rf $(BUILD_DIR)/harfbuzz-1.4.6
@@ -46,7 +53,14 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--disable-static \
-	--with-gobject )
+	--enable-shared \
+	--with-coretext=no \
+	--with-uniscribe=no \
+	--with-cairo=yes \
+	--with-freetype=yes \
+	--with-graphite2=no \
+	--with-glib=yes \
+	--with-icu=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/harfbuzz-1.4.6
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/harfbuzz-1.4.6
 	@rm -rf $(BUILD_DIR)/harfbuzz-1.4.6

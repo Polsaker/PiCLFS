@@ -22,8 +22,8 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--sysconfdir=/etc \
-	--localstatedir=/var \
+	--sysconfdir=$(SYSROOT_DIR)/etc \
+	--localstatedir=$(SYSROOT_DIR)/var \
 	--disable-static \
 	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libXau-1.0.8
