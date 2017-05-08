@@ -55,6 +55,7 @@ staging:
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && aclocal )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoheader )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoconf )
+	@sed -i -e 's#modules demos tests#modules#g' $(BUILD_DIR)/gtk+-2.24.30/Makefile.in
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && \
 	ac_cv_path_GTK_UPDATE_ICON_CACHE=$(TOOLS_DIR)/usr/bin/gtk-update-icon-cache \
 	ac_cv_path_GDK_PIXBUF_CSOURCE=$(TOOLS_DIR)/usr/bin/gdk-pixbuf-csource \
@@ -99,6 +100,7 @@ system:
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && aclocal )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoheader )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoconf )
+	@sed -i -e 's#modules demos tests#modules#g' $(BUILD_DIR)/gtk+-2.24.30/Makefile.in
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && \
 	ac_cv_path_GTK_UPDATE_ICON_CACHE=$(TOOLS_DIR)/usr/bin/gtk-update-icon-cache \
 	ac_cv_path_GDK_PIXBUF_CSOURCE=$(TOOLS_DIR)/usr/bin/gdk-pixbuf-csource \
