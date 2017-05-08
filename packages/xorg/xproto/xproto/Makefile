@@ -1,5 +1,5 @@
 NAME := xproto
-SOURCE := $(PACKAGES_DIR)/$(NAME)/xproto-7.0.31.tar.bz2
+SOURCE := $(PACKAGES_DIR)/xorg/xproto/$(NAME)/xproto-7.0.31.tar.bz2
 
 toolchain:
 	@$(STEP) "Xproto 7.0.31"
@@ -41,8 +41,8 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--sysconfdir=/etc \
-	--localstatedir=/var \
+	--sysconfdir=$(SYSROOT_DIR)/etc \
+	--localstatedir=$(SYSROOT_DIR)/var \
 	--disable-static \
 	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xproto-7.0.31
