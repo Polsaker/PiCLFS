@@ -1,3 +1,5 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := freetype
 SOURCE := $(PACKAGES_DIR)/$(NAME)/freetype-2.7.1.tar.bz2
 TARGET_DEPENDENCIES := libpng
@@ -22,8 +24,13 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/freetype-2.7.1
+	--disable-static \
+	--enable-shared \
+	--with-zlib \
+	--without-bzip2 \
+	LIBPNG_CFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --cflags`" \
+	LIBPNG_LDFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --ldflags`" )
+	@make -j$(CONFIG_PARALLEL_JOBS) CCexe="gcc" -C $(BUILD_DIR)/freetype-2.7.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/freetype-2.7.1
 	@make staging -C $(PACKAGES_DIR)/harfbuzz
 	@make clean -C $(BUILD_DIR)/freetype-2.7.1
@@ -34,8 +41,13 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/freetype-2.7.1
+	--disable-static \
+	--enable-shared \
+	--with-zlib \
+	--without-bzip2 \
+	LIBPNG_CFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --cflags`" \
+	LIBPNG_LDFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --ldflags`" )
+	@make -j$(CONFIG_PARALLEL_JOBS) CCexe="gcc" -C $(BUILD_DIR)/freetype-2.7.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/freetype-2.7.1
 	@rm -rf $(BUILD_DIR)/freetype-2.7.1
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
@@ -60,8 +72,13 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/freetype-2.7.1
+	--disable-static \
+	--enable-shared \
+	--with-zlib \
+	--without-bzip2 \
+	LIBPNG_CFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --cflags`" \
+	LIBPNG_LDFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --ldflags`" )
+	@make -j$(CONFIG_PARALLEL_JOBS) CCexe="gcc" -C $(BUILD_DIR)/freetype-2.7.1
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/freetype-2.7.1
 	@make system -C $(PACKAGES_DIR)/harfbuzz
 	@make clean -C $(BUILD_DIR)/freetype-2.7.1
@@ -72,8 +89,13 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/freetype-2.7.1
+	--disable-static \
+	--enable-shared \
+	--with-zlib \
+	--without-bzip2 \
+	LIBPNG_CFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --cflags`" \
+	LIBPNG_LDFLAGS="`$(SYSROOT_DIR)/usr/bin/libpng-config --ldflags`" )
+	@make -j$(CONFIG_PARALLEL_JOBS) CCexe="gcc" -C $(BUILD_DIR)/freetype-2.7.1
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/freetype-2.7.1
 	@rm -rf $(BUILD_DIR)/freetype-2.7.1
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
