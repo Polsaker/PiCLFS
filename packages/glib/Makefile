@@ -14,8 +14,10 @@ toolchain:
 	@sed -i -e "s# tests##" $(BUILD_DIR)/glib-2.52.0/glib/Makefile.am
 	@patch -Np0 -i $(PACKAGES_DIR)/glib/glib-2.52.0-as_fn_error.patch -d $(BUILD_DIR)/glib-2.52.0
 	@( cd $(BUILD_DIR)/glib-2.52.0 && \
-	glib_cv_long_long_format=ll \
-	glib_cv_stack_grows=no \
+	CFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
+	CPPFLAGS="-I$(TOOLS_DIR)/usr/include" \
+	CXXFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
+	LDFLAGS="-L$(TOOLS_DIR)/lib -L$(TOOLS_DIR)/usr/lib -Wl,-rpath,$(TOOLS_DIR)/usr/lib" \
 	PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" \
 	PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" \
 	PKG_CONFIG_SYSROOT_DIR="/" \
@@ -25,9 +27,16 @@ toolchain:
 	--prefix=$(TOOLS_DIR)/usr \
 	--sysconfdir=$(TOOLS_DIR)/etc \
 	--localstatedir=$(TOOLS_DIR)/var \
-	--with-pcre=system \
 	--enable-shared \
-	--disable-static )
+	--disable-static \
+	--disable-coverage \
+	--disable-dtrace \
+	--disable-fam \
+	--disable-libelf \
+	--disable-selinux \
+	--disable-systemtap \
+	--disable-xattr \
+	--with-pcre=system )
 	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/glib-2.52.0
 	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/glib-2.52.0
 	@rm -rf $(BUILD_DIR)/glib-2.52.0
