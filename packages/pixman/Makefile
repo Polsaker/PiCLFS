@@ -18,7 +18,12 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--disable-gtk \
+	--enable-arm-simd \
+	--enable-arm-neon \
+	--disable-arm-iwmmxt )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pixman-0.34.0
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pixman-0.34.0
 	@rm -rf $(BUILD_DIR)/pixman-0.34.0
@@ -41,7 +46,12 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--disable-gtk \
+	--enable-arm-simd \
+	--enable-arm-neon \
+	--disable-arm-iwmmxt )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pixman-0.34.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pixman-0.34.0
 	@rm -rf $(BUILD_DIR)/pixman-0.34.0
