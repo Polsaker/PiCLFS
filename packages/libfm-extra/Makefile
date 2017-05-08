@@ -22,10 +22,11 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--sysconfdir=/etc \
+	--sysconfdir=$(SYSROOT_DIR)/etc \
+	--disable-static \
+	--enable-shared \
 	--with-extra-only \
-	--with-gtk=no \
-	--disable-static )
+	--with-gtk=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libfm-1.2.5
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libfm-1.2.5
 	@rm -rf $(BUILD_DIR)/libfm-1.2.5
@@ -50,9 +51,10 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--sysconfdir=/etc \
+	--disable-static \
+	--enable-shared \
 	--with-extra-only \
-	--with-gtk=no \
-	--disable-static )
+	--with-gtk=no )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libfm-1.2.5
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libfm-1.2.5
 	@rm -rf $(BUILD_DIR)/libfm-1.2.5
