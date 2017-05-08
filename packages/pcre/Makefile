@@ -43,11 +43,13 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=$(SYSROOT_DIR)/usr \
-	--enable-unicode-properties \
-	--enable-pcre16 \
-	--enable-pcre32 \
-	--enable-pcregrep-libz \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-pcre8 \
+	--disable-pcre16 \
+	--disable-pcre32 \
+	--enable-utf \
+	--enable-unicode-properties )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pcre-8.40
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pcre-8.40
 	@rm -rf $(BUILD_DIR)/pcre-8.40
@@ -71,11 +73,13 @@ system:
 	--build=$(CONFIG_HOST) \
 	--prefix=/usr \
 	--docdir=/usr/share/doc/pcre-8.40 \
-	--enable-unicode-properties \
-	--enable-pcre16 \
-	--enable-pcre32 \
-	--enable-pcregrep-libz \
-	--disable-static )
+	--disable-static \
+	--enable-shared \
+	--enable-pcre8 \
+	--disable-pcre16 \
+	--disable-pcre32 \
+	--enable-utf \
+	--enable-unicode-properties )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pcre-8.40
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pcre-8.40
 	@mv -v $(ROOTFS_DIR)/usr/lib/libpcre.so.* $(ROOTFS_DIR)/lib
