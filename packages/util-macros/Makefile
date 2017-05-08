@@ -22,7 +22,8 @@ staging:
  	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/util-macros-1.19.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/util-macros-1.19.1
 	@rm -rf $(BUILD_DIR)/util-macros-1.19.1
@@ -48,7 +49,8 @@ system:
  	--prefix=/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/util-macros-1.19.1
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/util-macros-1.19.1
 	@rm -rf $(BUILD_DIR)/util-macros-1.19.1
