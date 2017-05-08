@@ -24,7 +24,8 @@ staging:
  	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libXau-1.0.8
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libXau-1.0.8
 	@rm -rf $(BUILD_DIR)/libXau-1.0.8
@@ -50,7 +51,8 @@ system:
  	--prefix=/usr \
 	--sysconfdir=/etc \
 	--localstatedir=/var \
-	--disable-static )
+	--disable-static \
+	--enable-shared )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libXau-1.0.8
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libXau-1.0.8
 	@rm -rf $(BUILD_DIR)/libXau-1.0.8
