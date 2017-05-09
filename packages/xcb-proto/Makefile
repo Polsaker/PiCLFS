@@ -2,11 +2,9 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := xcb-proto
 SOURCE := $(PACKAGES_DIR)/$(NAME)/xcb-proto-1.12.tar.bz2
-HOST_DEPENDENCIES := python
 
 toolchain:
 	@$(STEP) "Xcb-proto 1.12"
-	@$(call toolchain_dependencies, $(HOST_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@patch -Np1 -i $(PACKAGES_DIR)/xcb-proto/xcb-proto-1.12-schema-1.patch -d $(BUILD_DIR)/xcb-proto-1.12
 	@( cd $(BUILD_DIR)/xcb-proto-1.12 && \
