@@ -148,6 +148,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/libxml2
 	@make staging -C $(PACKAGES_DIR)/wireless_tools
 	@make staging -C $(PACKAGES_DIR)/lxpanel
+	@make staging -C $(PACKAGES_DIR)/dbus
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -213,6 +214,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/libxml2
 	@make system -C $(PACKAGES_DIR)/wireless_tools
 	@make system -C $(PACKAGES_DIR)/lxpanel
+	@make system -C $(PACKAGES_DIR)/dbus
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
@@ -234,6 +236,9 @@ image:
 	fi;
 	@if [ -d $(ROOTFS_DIR)/var/lib/sshd ] ; then \
 	    echo "/var/lib/sshd	d	700	0	2	-	-	-	-	-" >> $(BUILD_DIR)/_device_table.txt ; \
+	fi;
+	@if [ -d $(ROOTFS_DIR)/usr/libexec/dbus-daemon-launch-helper ] ; then \
+	    echo "/usr/libexec/dbus-daemon-launch-helper	d	4750	0	18	-	-	-	-	-" >> $(BUILD_DIR)/_device_table.txt ; \
 	fi;
 	@echo '#!/bin/sh' > $(BUILD_DIR)/_fakeroot.fs
 	@echo 'set -e' >> $(BUILD_DIR)/_fakeroot.fs
