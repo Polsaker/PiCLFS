@@ -90,6 +90,8 @@ toolchain:
 	@make toolchain -C $(PACKAGES_DIR)/libxml-parser-perl
 	@make toolchain -C $(PACKAGES_DIR)/intltool
 	@make toolchain -C $(PACKAGES_DIR)/libgtk2
+	@make toolchain -C $(PACKAGES_DIR)/dbus
+	@make toolchain -C $(PACKAGES_DIR)/dbus-glib
 	@make toolchain-staging
 	$(PRINT_BUILD_TIME)
 
@@ -149,6 +151,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/wireless_tools
 	@make staging -C $(PACKAGES_DIR)/lxpanel
 	@make staging -C $(PACKAGES_DIR)/dbus
+	@make staging -C $(PACKAGES_DIR)/dbus-glib
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -215,6 +218,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/wireless_tools
 	@make system -C $(PACKAGES_DIR)/lxpanel
 	@make system -C $(PACKAGES_DIR)/dbus
+	@make system -C $(PACKAGES_DIR)/dbus-glib
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 

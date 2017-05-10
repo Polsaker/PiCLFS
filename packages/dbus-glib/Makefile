@@ -1,10 +1,10 @@
-NAME := dbus
-SOURCE := $(PACKAGES_DIR)/$(NAME)/dbus-1.10.18.tar.gz
+NAME := dbus-glib
+SOURCE := $(PACKAGES_DIR)/$(NAME)/dbus-glib-0.108.tar.gz
 
 toolchain:
-	@$(STEP) "Dbus 1.10.18"
+	@$(STEP) "Dbus Glib 0.108"
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
-	@( cd $(BUILD_DIR)/dbus-1.10.18 && \
+	@( cd $(BUILD_DIR)/dbus-glib-0.108 && \
 	CFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
 	CPPFLAGS="-I$(TOOLS_DIR)/usr/include" \
 	CXXFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
@@ -18,17 +18,20 @@ toolchain:
 	--prefix=$(TOOLS_DIR)/usr \
 	--sysconfdir=$(TOOLS_DIR)/etc \
 	--localstatedir=$(TOOLS_DIR)/var \
-	--disable-doxygen-docs \
+	--disable-tests \
 	--disable-xml-docs \
+	--disable-bash-completion \
+	--disable-doxygen-docs \
+	--enable-asserts=yes \
 	--enable-shared \
 	--disable-static )
-	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-1.10.18
-	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/dbus-1.10.18
-	@rm -rf $(BUILD_DIR)/dbus-1.10.18
+	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-glib-0.108
+	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/dbus-glib-0.108
+	@rm -rf $(BUILD_DIR)/dbus-glib-0.108
 	@echo $(NAME) >> $(LOG_DIR)/toolchain.packages
 
 staging:
-	@$(STEP) "Dbus 1.10.18"
+	@$(STEP) "Dbus Glib 0.108"
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -38,24 +41,29 @@ staging:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
-	@( cd $(BUILD_DIR)/dbus-1.10.18 && \
+	@$(TOOLS_DIR)/usr/bin/dbus-daemon --introspect > $(BUILD_DIR)/dbus-glib-0.108/introspect.xml
+	@( cd $(BUILD_DIR)/dbus-glib-0.108 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=$(SYSROOT_DIR)/etc \
-	--localstatedir=$(SYSROOT_DIR)/var \
-	--disable-doxygen-docs \
+	--disable-tests \
 	--disable-xml-docs \
+	--with-introspect-xml=$(BUILD_DIR)/dbus-glib-0.108/introspect.xml \
+	--with-dbus-binding-tool=$(TOOLS_DIR)/usr/bin/dbus-binding-tool \
+	--disable-bash-completion \
+	--disable-doxygen-docs \
+	--enable-asserts=yes \
 	--disable-static )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-1.10.18
-	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/dbus-1.10.18
-	@rm -rf $(BUILD_DIR)/dbus-1.10.18
+	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-glib-0.108
+	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/dbus-glib-0.108
+	@rm -rf $(BUILD_DIR)/dbus-glib-0.108
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
-	@$(STEP) "Dbus 1.10.18"
+	@$(STEP) "Dbus Glib 0.108"
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -65,25 +73,23 @@ system:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
-	@( cd $(BUILD_DIR)/dbus-1.10.18 && \
+	@$(TOOLS_DIR)/usr/bin/dbus-daemon --introspect > $(BUILD_DIR)/dbus-glib-0.108/introspect.xml
+	@( cd $(BUILD_DIR)/dbus-glib-0.108 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=/usr \
 	--sysconfdir=/etc \
-	--localstatedir=/var \
-	--disable-doxygen-docs \
+	--disable-tests \
 	--disable-xml-docs \
-	--disable-static \
-	--docdir=/usr/share/doc/dbus-1.10.18 \
-	--with-console-auth-dir=/run/console \
-	--with-system-pid-file=/run/dbus/pid \
-	--with-system-socket=/run/dbus/system_bus_socket )
-	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-1.10.18
-	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/dbus-1.10.18
-	@echo 'messagebus:x:18:' >> $(ROOTFS_DIR)/etc/group
-	@echo 'messagebus:x:18:18:D-Bus Message Daemon User:/var/run/dbus:/bin/false' >> $(ROOTFS_DIR)/etc/passwd
-	@cp -v $(PACKAGES_DIR)/$(NAME)/session-local.conf $(ROOTFS_DIR)/etc/dbus-1/session-local.conf
-	@rm -rf $(BUILD_DIR)/dbus-1.10.18
+	--with-introspect-xml=$(BUILD_DIR)/dbus-glib-0.108/introspect.xml \
+	--with-dbus-binding-tool=$(TOOLS_DIR)/usr/bin/dbus-binding-tool \
+	--disable-bash-completion \
+	--disable-doxygen-docs \
+	--enable-asserts=yes \
+	--disable-static )
+	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/dbus-glib-0.108
+	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/dbus-glib-0.108
+	@rm -rf $(BUILD_DIR)/dbus-glib-0.108
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
