@@ -2,7 +2,6 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := libxml2
 SOURCE := $(PACKAGES_DIR)/$(NAME)/libxml2-2.9.4.tar.gz
-TARGET_DEPENDENCIES := python
 
 toolchain:
 	@$(STEP) "libxml2 2.9.4"
@@ -32,7 +31,6 @@ toolchain:
 
 staging:
 	@$(STEP) "libxml2 2.9.4"
-	@$(call staging_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -60,7 +58,6 @@ staging:
 
 system:
 	@$(STEP) "libxml2 2.9.4"
-	@$(call system_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
