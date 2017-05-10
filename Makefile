@@ -219,6 +219,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/lxpanel
 	@make system -C $(PACKAGES_DIR)/dbus
 	@make system -C $(PACKAGES_DIR)/dbus-glib
+	@make system -C $(PACKAGES_DIR)/lxappearance
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 

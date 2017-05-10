@@ -1,8 +1,13 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := dbus-glib
 SOURCE := $(PACKAGES_DIR)/$(NAME)/dbus-glib-0.108.tar.gz
+HOST_DEPENDENCIES := dbus
+TARGET_DEPENDENCIES := dbus
 
 toolchain:
 	@$(STEP) "Dbus Glib 0.108"
+	@$(call toolchain_dependencies, $(HOST_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@( cd $(BUILD_DIR)/dbus-glib-0.108 && \
 	CFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
@@ -32,6 +37,7 @@ toolchain:
 
 staging:
 	@$(STEP) "Dbus Glib 0.108"
+	@$(call staging_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -64,6 +70,7 @@ staging:
 
 system:
 	@$(STEP) "Dbus Glib 0.108"
+	@$(call system_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
