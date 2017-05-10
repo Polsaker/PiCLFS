@@ -143,6 +143,11 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/menu-cache
 	@make staging -C $(PACKAGES_DIR)/libfm
 	@make staging -C $(PACKAGES_DIR)/pcmanfm
+	@make staging -C $(PACKAGES_DIR)/keybinder2
+	@make staging -C $(PACKAGES_DIR)/libwnck
+	@make staging -C $(PACKAGES_DIR)/libxml2
+	@make staging -C $(PACKAGES_DIR)/wireless_tools
+	@make staging -C $(PACKAGES_DIR)/lxpanel
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -203,6 +208,11 @@ system:
 	@make system -C $(PACKAGES_DIR)/menu-cache
 	@make system -C $(PACKAGES_DIR)/libfm
 	@make system -C $(PACKAGES_DIR)/pcmanfm
+	@make system -C $(PACKAGES_DIR)/keybinder2
+	@make system -C $(PACKAGES_DIR)/libwnck
+	@make system -C $(PACKAGES_DIR)/libxml2
+	@make system -C $(PACKAGES_DIR)/wireless_tools
+	@make system -C $(PACKAGES_DIR)/lxpanel
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
