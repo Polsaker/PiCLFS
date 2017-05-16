@@ -25,7 +25,7 @@ staging:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/lxpanel-0.9.3
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/lxpanel-0.9.3
 	@rm -rf $(BUILD_DIR)/lxpanel-0.9.3
-	@echo $(NAME) >> $(LOG_DIR)/system.packages
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 system:
 	@$(STEP) "LXPanel 0.9.3"

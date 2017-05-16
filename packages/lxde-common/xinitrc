@@ -1,0 +1,2 @@
+# No need to run dbus-launch, since it is run by startlxde
+ck-launch-session startlxde
