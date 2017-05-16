@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := lxsession
 SOURCE := $(PACKAGES_DIR)/$(NAME)/lxsession-0.5.3.tar.xz
-TARGET_DEPENDENCIES := dbus-glib libunique lsb_release polkit
+TARGET_DEPENDENCIES := dbus-glib libunique lsb-release polkit
 
 staging:
 	@$(STEP) "LXSession 0.5.3"

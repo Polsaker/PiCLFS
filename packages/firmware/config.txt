@@ -91,3 +91,6 @@ dtparam=random=on
 #dtoverlay=vc4-kms-v3d
 
 # Additional overlays and parameters are documented in /boot/overlays/README
+
+max_usb_current=2
+safe_mode_gpio=4
