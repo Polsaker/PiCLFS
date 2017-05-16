@@ -152,6 +152,10 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/lxpanel
 	@make staging -C $(PACKAGES_DIR)/dbus
 	@make staging -C $(PACKAGES_DIR)/dbus-glib
+	@make staging -C $(PACKAGES_DIR)/libunique
+	@make staging -C $(PACKAGES_DIR)/lsb-release
+	@make staging -C $(PACKAGES_DIR)/polkit
+	@make staging -C $(PACKAGES_DIR)/lxsession
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -220,6 +224,10 @@ system:
 	@make system -C $(PACKAGES_DIR)/dbus
 	@make system -C $(PACKAGES_DIR)/dbus-glib
 	@make system -C $(PACKAGES_DIR)/lxappearance
+	@make system -C $(PACKAGES_DIR)/libunique
+	@make system -C $(PACKAGES_DIR)/lsb-release
+	@make system -C $(PACKAGES_DIR)/polkit
+	@make system -C $(PACKAGES_DIR)/lxsession
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
