@@ -3,7 +3,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 NAME := glib
 SOURCE := $(PACKAGES_DIR)/$(NAME)/glib-2.52.0.tar.xz
 HOST_DEPENDENCIES := libffi pcre util-linux zlib gettext
-TARGET_DEPENDENCIES := libffi pcre util-linux zlib
+TARGET_DEPENDENCIES := libffi pcre zlib
 
 toolchain:
 	@$(STEP) "Glib 2.52.0"
