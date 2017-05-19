@@ -31,9 +31,15 @@ system:
 	@make -j1 -C $(BUILD_DIR)/ntp-4.2.8p9
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/ntp-4.2.8p9
 	@cp -v $(PACKAGES_DIR)/ntp/ntp.conf $(ROOTFS_DIR)/etc/ntp.conf
-	@cp -v $(PACKAGES_DIR)/ntp/ntp $(ROOTFS_DIR)/etc/rc.d/init.d/ntp
-	@chmod -v 755 $(ROOTFS_DIR)/etc/rc.d/init.d/ntp
-	@ln -svf ../init.d/ntp $(ROOTFS_DIR)/etc/rc.d/start/S49ntp
+	@cp -v $(PACKAGES_DIR)/ntp/ntpd $(ROOTFS_DIR)/etc/rc.d/init.d/ntpd
+	@chmod -v 755 $(ROOTFS_DIR)/etc/rc.d/init.d/ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc0.d/K46ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc1.d/K46ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc2.d/K46ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc3.d/S26ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc4.d/S26ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc5.d/S26ntpd
+	@ln -svf ../init.d/ntpd $(ROOTFS_DIR)/etc/rc.d/rc6.d/K46ntpd
 	@echo 'ntp:x:87:' >> $(ROOTFS_DIR)/etc/group
 	@echo 'ntp:x:87:87:Network Time Protocol:/var/lib/ntp:/bin/false' >> $(ROOTFS_DIR)/etc/passwd
 	@mkdir -pv $(ROOTFS_DIR)/var/lib/ntp
