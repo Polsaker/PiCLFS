@@ -76,22 +76,8 @@ toolchain:
 	@make toolchain -C $(PACKAGES_DIR)/libtool
 	@make toolchain -C $(PACKAGES_DIR)/autoconf
 	@make toolchain -C $(PACKAGES_DIR)/automake
-	@make toolchain -C $(PACKAGES_DIR)/libffi
-	@make toolchain -C $(PACKAGES_DIR)/pcre
-	@make toolchain -C $(PACKAGES_DIR)/util-linux
-	@make toolchain -C $(PACKAGES_DIR)/glib
-	@make toolchain -C $(PACKAGES_DIR)/xorg/xproto/xproto
-	@make toolchain -C $(PACKAGES_DIR)/libxslt
-	@make toolchain -C $(PACKAGES_DIR)/expat
-	@make toolchain -C $(PACKAGES_DIR)/xcb-proto
-	@make toolchain -C $(PACKAGES_DIR)/libpng
-	@make toolchain -C $(PACKAGES_DIR)/gdk-pixbuf
 	@make toolchain -C $(PACKAGES_DIR)/flex
-	@make toolchain -C $(PACKAGES_DIR)/libxml-parser-perl
-	@make toolchain -C $(PACKAGES_DIR)/intltool
-	@make toolchain -C $(PACKAGES_DIR)/libgtk2
-	@make toolchain -C $(PACKAGES_DIR)/dbus
-	@make toolchain -C $(PACKAGES_DIR)/dbus-glib
+	@make toolchain -C $(PACKAGES_DIR)/bison
 	@make toolchain-staging
 	$(PRINT_BUILD_TIME)
 
@@ -99,63 +85,24 @@ toolchain-staging:
 	@make check
 	@rm -rf $(BUILD_DIR)
 	@mkdir -pv $(LOG_DIR) $(BUILD_DIR)
-	@mkdir -p $(SYSROOT_DIR)/usr/share/aclocal
 	@rm -rf $(LOG_DIR)/staging.packages
-	@make staging-libs -C $(PACKAGES_DIR)/gcc
-	@make staging -C $(PACKAGES_DIR)/libcap
-	@make staging -C $(PACKAGES_DIR)/ncurses
 	@make staging -C $(PACKAGES_DIR)/zlib
-	@make staging -C $(PACKAGES_DIR)/openssl
-	@make staging -C $(PACKAGES_DIR)/linux-pam
+	@make staging -C $(PACKAGES_DIR)/binutils
+	@make staging -C $(PACKAGES_DIR)/gmp
+	@make staging -C $(PACKAGES_DIR)/mpfr
+	@make staging -C $(PACKAGES_DIR)/mpc
+	@make staging -C $(PACKAGES_DIR)/gcc
+	@make staging -C $(PACKAGES_DIR)/ncurses
+	@make staging -C $(PACKAGES_DIR)/readline
 	@make staging -C $(PACKAGES_DIR)/libffi
 	@make staging -C $(PACKAGES_DIR)/pcre
-	@make staging -C $(PACKAGES_DIR)/util-linux
 	@make staging -C $(PACKAGES_DIR)/glib
-	@make staging -C $(PACKAGES_DIR)/atk
-	@make staging -C $(PACKAGES_DIR)/expat
-	@make staging -C $(PACKAGES_DIR)/libpng
-	@make staging -C $(PACKAGES_DIR)/freetype
-	@make staging -C $(PACKAGES_DIR)/fontconfig
-	@make staging -C $(PACKAGES_DIR)/pixman
-	@make staging -C $(PACKAGES_DIR)/libpthread-stubs
-	@make staging -C $(PACKAGES_DIR)/xcb-proto
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/xproto
-	@make staging -C $(PACKAGES_DIR)/util-macros
-	@make staging -C $(PACKAGES_DIR)/libxau
-	@make staging -C $(PACKAGES_DIR)/libxdmcp
-	@make staging -C $(PACKAGES_DIR)/libxcb
-	@make staging -C $(PACKAGES_DIR)/xtrans
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/inputproto
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/kbproto
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/xextproto
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/xf86bigfontproto
-	@make staging -C $(PACKAGES_DIR)/libx11
-	@make staging -C $(PACKAGES_DIR)/libxext
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto/renderproto
-	@make staging -C $(PACKAGES_DIR)/libxrender
-	@make staging -C $(PACKAGES_DIR)/cairo
-	@make staging -C $(PACKAGES_DIR)/harfbuzz
-	@make staging -C $(PACKAGES_DIR)/freetype
-	@make staging -C $(PACKAGES_DIR)/gdk-pixbuf
-	@make staging -C $(PACKAGES_DIR)/lxmenu-data
-	@make staging -C $(PACKAGES_DIR)/libfm-extra
-	@make staging -C $(PACKAGES_DIR)/pango
-	@make staging -C $(PACKAGES_DIR)/hicolor-icon-theme
-	@make staging -C $(PACKAGES_DIR)/libgtk2
-	@make staging -C $(PACKAGES_DIR)/menu-cache
-	@make staging -C $(PACKAGES_DIR)/libfm
-	@make staging -C $(PACKAGES_DIR)/pcmanfm
-	@make staging -C $(PACKAGES_DIR)/keybinder2
-	@make staging -C $(PACKAGES_DIR)/libwnck
-	@make staging -C $(PACKAGES_DIR)/libxml2
-	@make staging -C $(PACKAGES_DIR)/wireless_tools
-	@make staging -C $(PACKAGES_DIR)/lxpanel
-	@make staging -C $(PACKAGES_DIR)/dbus
-	@make staging -C $(PACKAGES_DIR)/dbus-glib
-	@make staging -C $(PACKAGES_DIR)/libunique
-	@make staging -C $(PACKAGES_DIR)/lsb-release
-	@make staging -C $(PACKAGES_DIR)/polkit
-	@make staging -C $(PACKAGES_DIR)/lxsession
+	@make staging -C $(PACKAGES_DIR)/xz
+	@make staging -C $(PACKAGES_DIR)/util-linux
+	@make staging -C $(PACKAGES_DIR)/libpipeline
+	@make staging -C $(PACKAGES_DIR)/gdbm
+	@make staging -C $(PACKAGES_DIR)/libcap
+	@make staging -C $(PACKAGES_DIR)/openssl
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -165,69 +112,68 @@ system:
 	@mkdir -pv $(LOG_DIR) $(BUILD_DIR) $(ROOTFS_DIR)
 	@rm -rf $(LOG_DIR)/system.packages
 	@make system -C $(PACKAGES_DIR)/skeleton
-	@make system-libs -C $(PACKAGES_DIR)/gcc
 	@make system -C $(PACKAGES_DIR)/linux
-	@make system -C $(PACKAGES_DIR)/busybox
+	@make system -C $(PACKAGES_DIR)/man-pages
+	@make system -C $(PACKAGES_DIR)/zlib
+	@make system -C $(PACKAGES_DIR)/file
+	@make system -C $(PACKAGES_DIR)/ncurses
+	@make system -C $(PACKAGES_DIR)/readline
+	@make system -C $(PACKAGES_DIR)/m4
+	@make system -C $(PACKAGES_DIR)/bc
+	@make system -C $(PACKAGES_DIR)/binutils
+	@make system -C $(PACKAGES_DIR)/gmp
+	@make system -C $(PACKAGES_DIR)/mpfr
+	@make system -C $(PACKAGES_DIR)/mpc
+	@make system -C $(PACKAGES_DIR)/gcc
+	@make system -C $(PACKAGES_DIR)/bzip2
+	@make system -C $(PACKAGES_DIR)/libffi
+	@make system -C $(PACKAGES_DIR)/pcre
+	@make system -C $(PACKAGES_DIR)/glib
+	@make system -C $(PACKAGES_DIR)/pkg-config
+	@make system -C $(PACKAGES_DIR)/sed
+	@make system -C $(PACKAGES_DIR)/shadow
+	@make system -C $(PACKAGES_DIR)/psmisc
 	@make system -C $(PACKAGES_DIR)/iana-etc
-	@make system -C $(PACKAGES_DIR)/bootscripts
+	@make system -C $(PACKAGES_DIR)/bison
+	@make system -C $(PACKAGES_DIR)/flex
+	@make system -C $(PACKAGES_DIR)/grep
+	@make system -C $(PACKAGES_DIR)/bash
+	@make system -C $(PACKAGES_DIR)/libtool
+	@make system -C $(PACKAGES_DIR)/gdbm
+	@make system -C $(PACKAGES_DIR)/gperf
+	@make system -C $(PACKAGES_DIR)/inetutils
+	@make system -C $(PACKAGES_DIR)/autoconf
+	@make system -C $(PACKAGES_DIR)/automake
+	@make system -C $(PACKAGES_DIR)/xz
+	@make system -C $(PACKAGES_DIR)/kmod
+	@make system -C $(PACKAGES_DIR)/gettext
+	@make system -C $(PACKAGES_DIR)/procps-ng
+	@make system -C $(PACKAGES_DIR)/util-linux
+	@make system -C $(PACKAGES_DIR)/e2fsprogs
+	@make system -C $(PACKAGES_DIR)/coreutils
+	@make system -C $(PACKAGES_DIR)/diffutils
+	@make system -C $(PACKAGES_DIR)/gawk
+	@make system -C $(PACKAGES_DIR)/findutils
+	@make system -C $(PACKAGES_DIR)/less
+	@make system -C $(PACKAGES_DIR)/gzip
+	@make system -C $(PACKAGES_DIR)/iproute2
+	@make system -C $(PACKAGES_DIR)/kbd
+	@make system -C $(PACKAGES_DIR)/libpipeline
+	@make system -C $(PACKAGES_DIR)/make
+	@make system -C $(PACKAGES_DIR)/patch
+	@make system -C $(PACKAGES_DIR)/sysklogd
+	@make system -C $(PACKAGES_DIR)/sysvinit
+	@make system -C $(PACKAGES_DIR)/eudev
+	@make system -C $(PACKAGES_DIR)/tar
+	@make system -C $(PACKAGES_DIR)/texinfo
+	@make system -C $(PACKAGES_DIR)/vim
 	@make system -C $(PACKAGES_DIR)/tzdata
+	@make system -C $(PACKAGES_DIR)/bootscripts
+	@make system -C $(PACKAGES_DIR)/lsb-release
 	@make system -C $(PACKAGES_DIR)/libcap
 	@make system -C $(PACKAGES_DIR)/openssl
 	@make system -C $(PACKAGES_DIR)/openssh
 	@make system -C $(PACKAGES_DIR)/ntp
-	@make system -C $(PACKAGES_DIR)/ncurses
-	@make system -C $(PACKAGES_DIR)/linux-pam
-	@make system -C $(PACKAGES_DIR)/zlib
-	@make system -C $(PACKAGES_DIR)/libffi
-	@make system -C $(PACKAGES_DIR)/pcre
-	@make system -C $(PACKAGES_DIR)/util-linux
-	@make system -C $(PACKAGES_DIR)/glib
-	@make system -C $(PACKAGES_DIR)/atk
-	@make system -C $(PACKAGES_DIR)/expat
-	@make system -C $(PACKAGES_DIR)/libpng
-	@make system -C $(PACKAGES_DIR)/freetype
-	@make system -C $(PACKAGES_DIR)/fontconfig
-	@make system -C $(PACKAGES_DIR)/pixman
-	@make system -C $(PACKAGES_DIR)/libpthread-stubs
-	@make system -C $(PACKAGES_DIR)/xcb-proto
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/xproto
-	@make system -C $(PACKAGES_DIR)/util-macros
-	@make system -C $(PACKAGES_DIR)/libxau
-	@make system -C $(PACKAGES_DIR)/libxdmcp
-	@make system -C $(PACKAGES_DIR)/libxcb
-	@make system -C $(PACKAGES_DIR)/xtrans
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/inputproto
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/kbproto
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/xextproto
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/xf86bigfontproto
-	@make system -C $(PACKAGES_DIR)/libx11
-	@make system -C $(PACKAGES_DIR)/libxext
-	@make system -C $(PACKAGES_DIR)/xorg/xproto/renderproto
-	@make system -C $(PACKAGES_DIR)/libxrender
-	@make system -C $(PACKAGES_DIR)/cairo
-	@make system -C $(PACKAGES_DIR)/harfbuzz
-	@make system -C $(PACKAGES_DIR)/freetype
-	@make system -C $(PACKAGES_DIR)/gdk-pixbuf
-	@make system -C $(PACKAGES_DIR)/lxmenu-data
-	@make system -C $(PACKAGES_DIR)/libfm-extra
-	@make system -C $(PACKAGES_DIR)/pango
-	@make system -C $(PACKAGES_DIR)/hicolor-icon-theme
-	@make system -C $(PACKAGES_DIR)/libgtk2
-	@make system -C $(PACKAGES_DIR)/menu-cache
-	@make system -C $(PACKAGES_DIR)/libfm
-	@make system -C $(PACKAGES_DIR)/pcmanfm
-	@make system -C $(PACKAGES_DIR)/keybinder2
-	@make system -C $(PACKAGES_DIR)/libwnck
-	@make system -C $(PACKAGES_DIR)/libxml2
-	@make system -C $(PACKAGES_DIR)/wireless_tools
-	@make system -C $(PACKAGES_DIR)/lxpanel
-	@make system -C $(PACKAGES_DIR)/dbus
-	@make system -C $(PACKAGES_DIR)/dbus-glib
-	@make system -C $(PACKAGES_DIR)/lxappearance
-	@make system -C $(PACKAGES_DIR)/libunique
-	@make system -C $(PACKAGES_DIR)/lsb-release
-	@make system -C $(PACKAGES_DIR)/polkit
-	@make system -C $(PACKAGES_DIR)/lxsession
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
@@ -244,6 +190,9 @@ image:
 	@rm -rf $(BUILD_DIR) $(IMAGES_DIR)
 	@mkdir -pv $(BUILD_DIR) $(IMAGES_DIR)
 	@cp $(WORKSPACE_DIR)/support/device_table.txt $(BUILD_DIR)/_device_table.txt
+	@if [ -d $(ROOTFS_DIR)/var/log/lastlog ] ; then \
+	    echo "/var/log/lastlog	d	664	13	13	-	-	-	-	-" >> $(BUILD_DIR)/_device_table.txt ; \
+	fi;
 	@if [ -d $(ROOTFS_DIR)/var/lib/ntp ] ; then \
 	    echo "/var/lib/ntp	d	755	87	87	-	-	-	-	-" >> $(BUILD_DIR)/_device_table.txt ; \
 	fi;
