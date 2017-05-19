@@ -1,5 +1,6 @@
 NAME := bootscripts
-SOURCE := $(PACKAGES_DIR)/$(NAME)/bootscripts-embedded.tar.gz
+SOURCE := $(PACKAGES_DIR)/$(NAME)/lfs-bootscripts-20170325.tar.bz2
+PILFS_SOURCE := $(PACKAGES_DIR)/$(NAME)/pilfs-bootscripts-20170225.tar.xz
 
 system:
 	@$(STEP) "Setting Up System Bootscripts"
@@ -12,6 +13,9 @@ system:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
-	@make DESTDIR=$(ROOTFS_DIR) install-bootscripts -C $(BUILD_DIR)/bootscripts-embedded
-	@rm -rf $(BUILD_DIR)/bootscripts-embedded
+	@make DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/lfs-bootscripts-20170325
+	@rm -rf $(BUILD_DIR)/lfs-bootscripts-20170325
+	@$(EXTRACT) $(PILFS_SOURCE) $(BUILD_DIR)
+	@make DESTDIR=$(ROOTFS_DIR) install-everything -C $(BUILD_DIR)/pilfs-bootscripts-20170225
+	@rm -rf $(BUILD_DIR)/pilfs-bootscripts-20170225
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
