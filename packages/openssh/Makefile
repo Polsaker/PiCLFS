@@ -37,6 +37,12 @@ system:
 	@echo "PasswordAuthentication yes" >> $(ROOTFS_DIR)/etc/ssh/sshd_config
 	@cp -v $(PACKAGES_DIR)/openssh/sshd $(ROOTFS_DIR)/etc/rc.d/init.d/sshd
 	@chmod -v 755 $(ROOTFS_DIR)/etc/rc.d/init.d/sshd
-	@ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/start/S50sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc0.d/K30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc1.d/K30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc2.d/K30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc3.d/S30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc4.d/S30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc5.d/S30sshd
+	ln -svf ../init.d/sshd $(ROOTFS_DIR)/etc/rc.d/rc6.d/K30sshd
 	@rm -rf $(BUILD_DIR)/openssh-7.4p1
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
