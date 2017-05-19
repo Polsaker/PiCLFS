@@ -12,9 +12,12 @@ staging:
 system:
 	@$(STEP) "Linux 4.4.45 API Headers"
 	@cat $(PACKAGES_DIR)/linux/rpi-4.4.y.part* | tar zxf -  -C $(BUILD_DIR)
+	@mkdir -p $(BUILD_DIR)/linux-rpi-4.4.y/dest
 	@make mrproper -C $(BUILD_DIR)/linux-rpi-4.4.y
 	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=$(CONFIG_MODE) headers_check -C $(BUILD_DIR)/linux-rpi-4.4.y
-	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=arm INSTALL_HDR_PATH=$(ROOTFS_DIR)/usr headers_install -C $(BUILD_DIR)/linux-rpi-4.4.y
+	@make -j$(CONFIG_PARALLEL_JOBS) ARCH=arm INSTALL_HDR_PATH=$(BUILD_DIR)/linux-rpi-4.4.y/dest headers_install -C $(BUILD_DIR)/linux-rpi-4.4.y
+	@find $(BUILD_DIR)/linux-rpi-4.4.y/dest/include \( -name .install -o -name ..install.cmd \) -delete
+	@cp -rv $(BUILD_DIR)/linux-rpi-4.4.y/dest/include/* $(ROOTFS_DIR)/usr/include
 	@rm -rf $(BUILD_DIR)/linux-rpi-4.4.y
 	@echo $(NAME) >> $(LOG_DIR)/system.packages
 
