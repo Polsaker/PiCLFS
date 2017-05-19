@@ -1,3 +1,5 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := zlib
 SOURCE := $(PACKAGES_DIR)/$(NAME)/zlib-1.2.11.tar.gz
 
