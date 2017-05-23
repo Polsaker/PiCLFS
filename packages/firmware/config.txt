@@ -88,7 +88,7 @@ dtparam=random=on
 #dtoverlay=lirc-rpi
 
 # Uncomment this to enable Eric Anholt's DRM VC4 HDMI/HVS/V3D driver
-#dtoverlay=vc4-kms-v3d
+dtoverlay=vc4-kms-v3d
 
 # Additional overlays and parameters are documented in /boot/overlays/README
 
