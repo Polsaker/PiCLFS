@@ -1,6 +1,6 @@
 NAME := harfbuzz
 SOURCE := $(PACKAGES_DIR)/$(NAME)/harfbuzz-1.4.6.tar.bz2
-TARGET_DEPENDENCIES := glib freetype
+TARGET_DEPENDENCIES := glib freetype cairo
 
 staging:
 	@$(STEP) "HarfBuzz 1.4.6"
