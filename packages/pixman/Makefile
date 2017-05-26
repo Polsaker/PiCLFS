@@ -1,3 +1,5 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := pixman
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pixman-0.34.0.tar.gz
 
