@@ -78,6 +78,14 @@ toolchain:
 	@make toolchain -C $(PACKAGES_DIR)/automake
 	@make toolchain -C $(PACKAGES_DIR)/flex
 	@make toolchain -C $(PACKAGES_DIR)/bison
+	@make toolchain -C $(PACKAGES_DIR)/libpng
+	@make toolchain -C $(PACKAGES_DIR)/nasm
+	@make toolchain -C $(PACKAGES_DIR)/libjpeg-turbo
+	@make toolchain -C $(PACKAGES_DIR)/libffi
+	@make toolchain -C $(PACKAGES_DIR)/pcre
+	@make toolchain -C $(PACKAGES_DIR)/glib
+	@make toolchain -C $(PACKAGES_DIR)/gdk-pixbuf
+	@make toolchain -C $(PACKAGES_DIR)/libgtk2
 	@make toolchain-staging
 	$(PRINT_BUILD_TIME)
 
@@ -95,6 +103,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/ncurses
 	@make staging -C $(PACKAGES_DIR)/readline
 	@make staging -C $(PACKAGES_DIR)/libffi
+	@make staging -C $(PACKAGES_DIR)/bzip2
 	@make staging -C $(PACKAGES_DIR)/pcre
 	@make staging -C $(PACKAGES_DIR)/glib
 	@make staging -C $(PACKAGES_DIR)/xz
@@ -104,29 +113,25 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/libcap
 	@make staging -C $(PACKAGES_DIR)/openssl
 	@make staging -C $(PACKAGES_DIR)/libpng
+	@make staging -C $(PACKAGES_DIR)/nasm
+	@make staging -C $(PACKAGES_DIR)/libjpeg-turbo
+	@make staging -C $(PACKAGES_DIR)/atk
+	@make staging -C $(PACKAGES_DIR)/gdk-pixbuf
 	@make staging -C $(PACKAGES_DIR)/freetype
-	@make staging -C $(PACKAGES_DIR)/expat
-	@make staging -C $(PACKAGES_DIR)/fontconfig
-	@make staging -C $(PACKAGES_DIR)/util-macros
-	@make staging -C $(PACKAGES_DIR)/xorg/xproto
-	@make staging -C $(PACKAGES_DIR)/libxau
-	@make staging -C $(PACKAGES_DIR)/xcb-proto
-	@make staging -C $(PACKAGES_DIR)/libxcb
-	@make staging -C $(PACKAGES_DIR)/xorg/xlib
-	@make staging -C $(PACKAGES_DIR)/pixman
-	@make staging -C $(PACKAGES_DIR)/cairo
 	@make staging -C $(PACKAGES_DIR)/harfbuzz
 	@make staging -C $(PACKAGES_DIR)/freetype
-	@make staging -C $(PACKAGES_DIR)/libdrm
+	@make staging -C $(PACKAGES_DIR)/fontconfig
+	@make staging -C $(PACKAGES_DIR)/pango
+	@make staging -C $(PACKAGES_DIR)/hicolor-icon-theme
+	@make staging -C $(PACKAGES_DIR)/libgtk2
+	@make staging -C $(PACKAGES_DIR)/pixman
+	@make staging -C $(PACKAGES_DIR)/libxml2
+	@make staging -C $(PACKAGES_DIR)/cairo
+	@make staging -C $(PACKAGES_DIR)/mtdev
 	@make staging -C $(PACKAGES_DIR)/xkeyboard-config
-	@make staging -C $(PACKAGES_DIR)/mesa
-	@make staging -C $(PACKAGES_DIR)/xbitmaps
-	@make staging -C $(PACKAGES_DIR)/xcb-util
-	@make staging -C $(PACKAGES_DIR)/xorg/xapp
-	@make staging -C $(PACKAGES_DIR)/xcursor-themes
-	@make staging -C $(PACKAGES_DIR)/xorg/xfonts
-	@make staging -C $(PACKAGES_DIR)/libepoxy
-	@make staging -C $(PACKAGES_DIR)/xserver
+	@make staging -C $(PACKAGES_DIR)/libxkbcommon
+	@make staging -C $(PACKAGES_DIR)/libevdev
+	@make staging -C $(PACKAGES_DIR)/libinput
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -198,38 +203,6 @@ system:
 	@make system -C $(PACKAGES_DIR)/openssl
 	@make system -C $(PACKAGES_DIR)/openssh
 	@make system -C $(PACKAGES_DIR)/ntp
-	@make system -C $(PACKAGES_DIR)/libpng
-	@make system -C $(PACKAGES_DIR)/freetype
-	@make system -C $(PACKAGES_DIR)/expat
-	@make system -C $(PACKAGES_DIR)/fontconfig
-	@make system -C $(PACKAGES_DIR)/util-macros
-	@make system -C $(PACKAGES_DIR)/xorg/xproto
-	@make system -C $(PACKAGES_DIR)/libxau
-	@make system -C $(PACKAGES_DIR)/xcb-proto
-	@make system -C $(PACKAGES_DIR)/libxcb
-	@make system -C $(PACKAGES_DIR)/xorg/xlib
-	@make system -C $(PACKAGES_DIR)/pixman
-	@make system -C $(PACKAGES_DIR)/cairo
-	@make system -C $(PACKAGES_DIR)/harfbuzz
-	@make system -C $(PACKAGES_DIR)/freetype
-	@make system -C $(PACKAGES_DIR)/libdrm
-	@make system -C $(PACKAGES_DIR)/xkeyboard-config
-	@make system -C $(PACKAGES_DIR)/mesa
-	@make system -C $(PACKAGES_DIR)/xbitmaps
-	@make system -C $(PACKAGES_DIR)/xcb-util
-	@make system -C $(PACKAGES_DIR)/xorg/xapp
-	@make system -C $(PACKAGES_DIR)/xcursor-themes
-	@make system -C $(PACKAGES_DIR)/xorg/xfonts
-	@make system -C $(PACKAGES_DIR)/xorg/xdriver/xorg-fbdev-driver
-	@make system -C $(PACKAGES_DIR)/libepoxy
-	@make system -C $(PACKAGES_DIR)/xserver
-	@make system -C $(PACKAGES_DIR)/twm
-	@make system -C $(PACKAGES_DIR)/xclock
-	@make system -C $(PACKAGES_DIR)/xterm
-	@make system -C $(PACKAGES_DIR)/xinit
-	# Last Xorg Setting
-	@ln -svf /usr/lib/X11 $(ROOTFS_DIR)/usr/lib/X11
-	@ln -svf /usr/include/X11 $(ROOTFS_DIR)/usr/include/X11
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
