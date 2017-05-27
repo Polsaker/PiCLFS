@@ -21,11 +21,7 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
-	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static \
-	--enable-shared \
-	--disable-glibtest \
-	--enable-explicit-deps=no )
+	--prefix=$(SYSROOT_DIR)/usr )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/atk-2.24.0
 	@make -j$(CONFIG_PARALLEL_JOBS) LDFLAGS=-L$(SYSROOT_DIR)/usr/lib install -C $(BUILD_DIR)/atk-2.24.0
 	@rm -rf $(BUILD_DIR)/atk-2.24.0
@@ -48,11 +44,7 @@ system:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
-	--prefix=/usr \
-	--disable-static \
-	--enable-shared \
-	--disable-glibtest \
-	--enable-explicit-deps=no )
+	--prefix=/usr )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/atk-2.24.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/atk-2.24.0
 	@rm -rf $(BUILD_DIR)/atk-2.24.0

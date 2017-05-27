@@ -2,6 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := pixman
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pixman-0.34.0.tar.gz
+TARGET_DEPENDENCIES := libgtk2 libpng
 
 staging:
 	@$(STEP) "Pixman 0.34.0"
@@ -21,10 +22,6 @@ staging:
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
 	--disable-static \
-	--enable-shared \
-	--disable-gtk \
-	--enable-arm-simd \
-	--enable-arm-neon \
 	--disable-arm-iwmmxt )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pixman-0.34.0
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pixman-0.34.0
@@ -49,10 +46,6 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--disable-static \
-	--enable-shared \
-	--disable-gtk \
-	--enable-arm-simd \
-	--enable-arm-neon \
 	--disable-arm-iwmmxt )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pixman-0.34.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pixman-0.34.0

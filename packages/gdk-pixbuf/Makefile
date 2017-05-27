@@ -2,8 +2,8 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := gdk-pixbuf
 SOURCE := $(PACKAGES_DIR)/$(NAME)/gdk-pixbuf-2.36.6.tar.xz
-HOST_DEPENDENCIES := glib libpng
-TARGET_DEPENDENCIES := glib libpng
+HOST_DEPENDENCIES := glib libjpeg-turbo libpng
+TARGET_DEPENDENCIES := glib libjpeg-turbo libpng
 
 toolchain:
 	@$(STEP) "gdk-pixbuf 2.36.6"
@@ -21,10 +21,6 @@ toolchain:
 	PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
 	./configure \
 	--prefix=$(TOOLS_DIR)/usr \
-	--sysconfdir=$(TOOLS_DIR)/etc \
-	--localstatedir=$(TOOLS_DIR)/var \
-	--enable-shared \
-	--disable-static \
 	--without-libjpeg \
 	--without-libtiff )
 	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
@@ -54,10 +50,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--enable-shared \
-	--disable-static \
 	--disable-glibtest \
-	--without-libjpeg \
 	--without-libtiff \
 	--with-x11 )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
@@ -87,10 +80,7 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--enable-shared \
-	--disable-static \
 	--disable-glibtest \
-	--without-libjpeg \
 	--without-libtiff \
 	--with-x11 )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gdk-pixbuf-2.36.6

@@ -2,7 +2,6 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := xkeyboard-config
 SOURCE := $(PACKAGES_DIR)/$(NAME)/xkeyboard-config-2.20.tar.bz2
-TARGET_DEPENDENCIES := xlib
 
 staging:
 	@$(STEP) "XKeyboard Config 2.20"
@@ -22,7 +21,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=$(SYSROOT_DIR)/usr \
-	--with-xkb-rules-symlink=xorg )
+	--disable-runtime-deps )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xkeyboard-config-2.20
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/xkeyboard-config-2.20
 	@rm -rf $(BUILD_DIR)/xkeyboard-config-2.20
@@ -46,7 +45,7 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=/usr \
-	--with-xkb-rules-symlink=xorg )
+	--disable-runtime-deps )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/xkeyboard-config-2.20
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/xkeyboard-config-2.20
 	@rm -rf $(BUILD_DIR)/xkeyboard-config-2.20

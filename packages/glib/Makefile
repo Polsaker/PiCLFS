@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := glib
 SOURCE := $(PACKAGES_DIR)/$(NAME)/glib-2.52.0.tar.xz
-HOST_DEPENDENCIES := libffi pcre util-linux zlib gettext
+HOST_DEPENDENCIES := libffi pcre zlib
 TARGET_DEPENDENCIES := libffi pcre zlib
 
 toolchain:
@@ -127,10 +127,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static \
-	--enable-shared \
-	--with-pcre=system \
-	--disable-libelf )
+	--with-pcre=system )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/glib-2.52.0
 	@make -j$(CONFIG_PARALLEL_JOBS) LDFLAGS=-L$(SYSROOT_DIR)/usr/lib install -C $(BUILD_DIR)/glib-2.52.0
 	@rm -rf $(BUILD_DIR)/glib-2.52.0
@@ -221,10 +218,7 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static \
-	--enable-shared \
-	--with-pcre=system \
-	--disable-libelf )
+	--with-pcre=system )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/glib-2.52.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/glib-2.52.0
 	@rm -rf $(BUILD_DIR)/glib-2.52.0

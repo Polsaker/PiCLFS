@@ -21,8 +21,6 @@ toolchain:
 	PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 \
 	./configure \
 	--prefix=$(TOOLS_DIR)/usr \
-	--sysconfdir=$(TOOLS_DIR)/etc \
-	--localstatedir=$(TOOLS_DIR)/var \
 	--enable-shared \
 	--disable-static )
 	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libpng-1.6.29
@@ -50,9 +48,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static \
-	--enable-shared \
-	--enable-arm-neon=yes )
+	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libpng-1.6.29
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/libpng-1.6.29
 	@rm -rf $(BUILD_DIR)/libpng-1.6.29
@@ -78,9 +74,7 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--disable-static \
-	--enable-shared \
-	--enable-arm-neon=yes )
+	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libpng-1.6.29
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/libpng-1.6.29
 	@rm -rf $(BUILD_DIR)/libpng-1.6.29

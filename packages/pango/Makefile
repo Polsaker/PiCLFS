@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := pango
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pango-1.40.5.tar.xz
-HOST_DEPENDENCIES := fontconfig freetype harfbuzz glib cairo
+HOST_DEPENDENCIES := fontconfig freetype harfbuzz glib
 TARGET_DEPENDENCIES := fontconfig freetype harfbuzz glib
 
 staging:
@@ -17,18 +17,14 @@ staging:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
+	@sed -i "/seems to be moved/s/^/#/" $(BUILD_DIR)/pango-1.40.5/ltmain.sh
 	@( cd $(BUILD_DIR)/pango-1.40.5 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--sysconfdir=$(SYSROOT_DIR)/etc \
-	--disable-static \
-	--enable-shared \
-	--enable-explicit-deps=no \
-	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
-	--x-libraries=$(SYSROOT_DIR)/usr/lib )
+	--sysconfdir=$(SYSROOT_DIR)/etc )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pango-1.40.5
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pango-1.40.5
 	@rm -rf $(BUILD_DIR)/pango-1.40.5
@@ -46,18 +42,14 @@ system:
 	@export RANLIB=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-ranlib
 	@export READELF=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-readelf
 	@export STRIP=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-strip
+	@sed -i "/seems to be moved/s/^/#/" $(BUILD_DIR)/pango-1.40.5/ltmain.sh
 	@( cd $(BUILD_DIR)/pango-1.40.5 && \
 	./configure \
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--sysconfdir=/etc \
-	--disable-static \
-	--enable-shared \
-	--enable-explicit-deps=no \
-	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
-	--x-libraries=$(SYSROOT_DIR)/usr/lib )
+	--sysconfdir=/etc )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pango-1.40.5
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pango-1.40.5
 	@rm -rf $(BUILD_DIR)/pango-1.40.5

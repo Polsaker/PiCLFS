@@ -1,6 +1,6 @@
 NAME := harfbuzz
 SOURCE := $(PACKAGES_DIR)/$(NAME)/harfbuzz-1.4.6.tar.bz2
-TARGET_DEPENDENCIES := glib freetype cairo
+TARGET_DEPENDENCIES := glib freetype
 
 staging:
 	@$(STEP) "HarfBuzz 1.4.6"
@@ -24,7 +24,7 @@ staging:
 	--enable-shared \
 	--with-coretext=no \
 	--with-uniscribe=no \
-	--with-cairo=yes \
+	--with-cairo=no \
 	--with-freetype=yes \
 	--with-graphite2=no \
 	--with-glib=yes \
@@ -56,7 +56,7 @@ system:
 	--enable-shared \
 	--with-coretext=no \
 	--with-uniscribe=no \
-	--with-cairo=yes \
+	--with-cairo=no \
 	--with-freetype=yes \
 	--with-graphite2=no \
 	--with-glib=yes \

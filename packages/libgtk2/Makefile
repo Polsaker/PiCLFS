@@ -3,7 +3,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 NAME := libgtk2
 SOURCE := $(PACKAGES_DIR)/$(NAME)/gtk+-2.24.30.tar.xz
 HOST_DEPENDENCIES := gdk-pixbuf
-TARGET_DEPENDENCIES := atk gdk-pixbuf
+TARGET_DEPENDENCIES := atk gdk-pixbuf pango hicolor-icon-theme
 
 toolchain:
 	@$(STEP) "GTK+ 2.24.30"
@@ -13,6 +13,10 @@ toolchain:
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && aclocal )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoheader )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoconf )
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/faq/Makefile.in
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/tutorial/Makefile.in
+	@sed -i "/seems to be moved/s/^/#/" $(BUILD_DIR)/gtk+-2.24.30/ltmain.sh
+	@sed -i -e 's#modules demos tests#modules#g' $(BUILD_DIR)/gtk+-2.24.30/Makefile.in
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && \
 	CFLAGS="-O2 -I$(TOOLS_DIR)/usr/include" \
 	CPPFLAGS="-I$(TOOLS_DIR)/usr/include" \
@@ -26,14 +30,9 @@ toolchain:
 	./configure \
 	--prefix=$(TOOLS_DIR)/usr \
 	--sysconfdir=$(TOOLS_DIR)/etc \
-	--localstatedir=$(TOOLS_DIR)/var \
-	--enable-shared \
-	--disable-static \
 	--disable-glibtest \
 	--without-libtiff \
-	--without-libjpeg \
-	--with-gdktarget=none \
-	--disable-cups )
+	--with-gdktarget=none )
 	@PKG_CONFIG="$(TOOLS_DIR)/usr/bin/pkg-config" PKG_CONFIG_LIBDIR="$(TOOLS_DIR)/usr/lib/pkgconfig:$(TOOLS_DIR)/usr/share/pkgconfig" PKG_CONFIG_SYSROOT_DIR="/" PKG_CONFIG_ALLOW_SYSTEM_CFLAGS=1 PKG_CONFIG_ALLOW_SYSTEM_LIBS=1 make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gtk+-2.24.30/gtk gtk-update-icon-cache
 	@cp -v $(BUILD_DIR)/gtk+-2.24.30/gtk/gtk-update-icon-cache $(TOOLS_DIR)/usr/bin
 	@rm -rf $(BUILD_DIR)/gtk+-2.24.30
@@ -55,6 +54,9 @@ staging:
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && aclocal )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoheader )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoconf )
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/faq/Makefile.in
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/tutorial/Makefile.in
+	@sed -i "/seems to be moved/s/^/#/" $(BUILD_DIR)/gtk+-2.24.30/ltmain.sh
 	@sed -i -e 's#modules demos tests#modules#g' $(BUILD_DIR)/gtk+-2.24.30/Makefile.in
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && \
 	ac_cv_path_GTK_UPDATE_ICON_CACHE=$(TOOLS_DIR)/usr/bin/gtk-update-icon-cache \
@@ -65,20 +67,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
-	--sysconfdir=$(SYSROOT_DIR)/etc \
-	--disable-static \
-	--enable-shared \
-	--disable-glibtest \
-	--enable-explicit-deps=no \
-	--with-x \
-	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
-	--x-libraries=$(SYSROOT_DIR)/usr/lib \
-	--with-gdktarget=x11 \
-	--disable-xinerama \
-	--with-xinput=no \
-	--without-libjpeg \
-	--without-libtiff \
-	--disable-cups )
+	--sysconfdir=$(SYSROOT_DIR)/etc )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gtk+-2.24.30
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/gtk+-2.24.30
 	@rm -rf $(BUILD_DIR)/gtk+-2.24.30
@@ -100,6 +89,9 @@ system:
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && aclocal )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoheader )
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && autoconf )
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/faq/Makefile.in
+	@sed -i -e 's#l \(gtk-.*\).sgml#& -o \1#' $(BUILD_DIR)/gtk+-2.24.30/docs/tutorial/Makefile.in
+	@sed -i "/seems to be moved/s/^/#/" $(BUILD_DIR)/gtk+-2.24.30/ltmain.sh
 	@sed -i -e 's#modules demos tests#modules#g' $(BUILD_DIR)/gtk+-2.24.30/Makefile.in
 	@( cd $(BUILD_DIR)/gtk+-2.24.30 && \
 	ac_cv_path_GTK_UPDATE_ICON_CACHE=$(TOOLS_DIR)/usr/bin/gtk-update-icon-cache \
@@ -110,23 +102,10 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
-	--sysconfdir=/etc \
-	--disable-static \
-	--enable-shared \
-	--disable-glibtest \
-	--enable-explicit-deps=no \
-	--with-x \
-	--x-includes=$(SYSROOT_DIR)/usr/include/X11 \
-	--x-libraries=$(SYSROOT_DIR)/usr/lib \
-	--with-gdktarget=x11 \
-	--disable-xinerama \
-	--with-xinput=no \
-	--without-libjpeg \
-	--without-libtiff \
-	--disable-cups )
+	--sysconfdir=/etc )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gtk+-2.24.30
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/gtk+-2.24.30
-	@echo "include \"/usr/share/themes/Clearlooks/gtk-2.0/gtkrc\"" > $(ROOTFS_DIR)/etc/gtk-2.0/gtkrc
-	@echo "gtk-icon-theme-name = \"elementary\"" >> $(ROOTFS_DIR)/etc/gtk-2.0/gtkrc
+	@echo "include \"/usr/share/themes/Glider/gtk-2.0/gtkrc\"" > $(ROOTFS_DIR)/etc/gtk-2.0/gtkrc
+	@echo "gtk-icon-theme-name = \"hicolor\"" >> $(ROOTFS_DIR)/etc/gtk-2.0/gtkrc
 	@rm -rf $(BUILD_DIR)/gtk+-2.24.30
 	@echo $(NAME) >> $(LOG_DIR)/system.packages

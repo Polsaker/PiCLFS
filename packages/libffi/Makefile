@@ -1,3 +1,5 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := libffi
 SOURCE := $(PACKAGES_DIR)/$(NAME)/libffi-3.2.1.tar.gz
 

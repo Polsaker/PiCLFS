@@ -1,5 +1,8 @@
+include $(WORKSPACE_DIR)/support/dependencies.mk
+
 NAME := pcre
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pcre-8.40.tar.bz2
+TARGET_DEPENDENCIES := bzip2 readline
 
 toolchain:
 	@$(STEP) "PCRE 8.40"
@@ -28,6 +31,7 @@ toolchain:
 
 staging:
 	@$(STEP) "PCRE 8.40"
+	@$(call staging_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -43,13 +47,13 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=$(SYSROOT_DIR)/usr \
-	--disable-static \
-	--enable-shared \
-	--enable-pcre8 \
-	--disable-pcre16 \
-	--disable-pcre32 \
-	--enable-utf \
-	--enable-unicode-properties )
+	--enable-unicode-properties \
+	--enable-pcre16 \
+	--enable-pcre32 \
+	--enable-pcregrep-libz \
+	--enable-pcregrep-libbz2 \
+	--enable-pcretest-libreadline \
+	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pcre-8.40
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/pcre-8.40
 	@rm -rf $(BUILD_DIR)/pcre-8.40
@@ -57,6 +61,7 @@ staging:
 
 system:
 	@$(STEP) "PCRE 8.40"
+	@$(call system_dependencies, $(TARGET_DEPENDENCIES))
 	@$(EXTRACT) $(SOURCE) $(BUILD_DIR)
 	@export CC=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-gcc
 	@export CXX=$(TOOLS_DIR)/usr/bin/$(CONFIG_TARGET)-g++
@@ -73,13 +78,13 @@ system:
 	--build=$(CONFIG_HOST) \
 	--prefix=/usr \
 	--docdir=/usr/share/doc/pcre-8.40 \
-	--disable-static \
-	--enable-shared \
-	--enable-pcre8 \
-	--disable-pcre16 \
-	--disable-pcre32 \
-	--enable-utf \
-	--enable-unicode-properties )
+	--enable-unicode-properties \
+	--enable-pcre16 \
+	--enable-pcre32 \
+	--enable-pcregrep-libz \
+	--enable-pcregrep-libbz2 \
+	--enable-pcretest-libreadline \
+	--disable-static )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/pcre-8.40
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/pcre-8.40
 	@mv -v $(ROOTFS_DIR)/usr/lib/libpcre.so.* $(ROOTFS_DIR)/lib
