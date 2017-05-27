@@ -131,6 +131,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/xkeyboard-config
 	@make staging -C $(PACKAGES_DIR)/libxkbcommon
 	@make staging -C $(PACKAGES_DIR)/libevdev
+	@make staging -C $(PACKAGES_DIR)/eudev
 	@make staging -C $(PACKAGES_DIR)/libinput
 	$(PRINT_BUILD_TIME)
 
