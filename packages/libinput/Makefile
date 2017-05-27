@@ -2,6 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := libinput
 SOURCE := $(PACKAGES_DIR)/$(NAME)/libinput-1.7.2.tar.xz
+TARGET_DEPENDENCIES := eudev
 
 staging:
 	@$(STEP) "libinput 1.7.2"
