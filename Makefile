@@ -86,6 +86,8 @@ toolchain:
 	@make toolchain -C $(PACKAGES_DIR)/glib
 	@make toolchain -C $(PACKAGES_DIR)/gdk-pixbuf
 	@make toolchain -C $(PACKAGES_DIR)/libgtk2
+	@make toolchain -C $(PACKAGES_DIR)/expat
+	@make toolchain -C $(PACKAGES_DIR)/wayland
 	@make toolchain-staging
 	$(PRINT_BUILD_TIME)
 
@@ -139,6 +141,10 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/libevdev
 	@make staging -C $(PACKAGES_DIR)/eudev
 	@make staging -C $(PACKAGES_DIR)/libinput
+	@make staging -C $(PACKAGES_DIR)/expat
+	@make staging -C $(PACKAGES_DIR)/wayland
+	@make staging -C $(PACKAGES_DIR)/wayland-protocols
+	@make staging -C $(PACKAGES_DIR)/weston
 	$(PRINT_BUILD_TIME)
 
 system:
@@ -236,6 +242,10 @@ system:
 	@make system -C $(PACKAGES_DIR)/libxkbcommon
 	@make system -C $(PACKAGES_DIR)/libevdev
 	@make system -C $(PACKAGES_DIR)/libinput
+	@make system -C $(PACKAGES_DIR)/expat
+	@make system -C $(PACKAGES_DIR)/wayland
+	@make system -C $(PACKAGES_DIR)/wayland-protocols
+	@make system -C $(PACKAGES_DIR)/weston
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 
