@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := pixman
 SOURCE := $(PACKAGES_DIR)/$(NAME)/pixman-0.34.0.tar.gz
-TARGET_DEPENDENCIES := libgtk2 libpng
+TARGET_DEPENDENCIES := libpng
 
 staging:
 	@$(STEP) "Pixman 0.34.0"

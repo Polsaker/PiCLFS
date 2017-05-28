@@ -25,7 +25,7 @@ staging:
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/eudev-3.2.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/eudev-3.2.1
 	@rm -rf $(BUILD_DIR)/eudev-3.2.1
-	@echo $(NAME) >> $(LOG_DIR)/system.packages
+	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 
 
 system:

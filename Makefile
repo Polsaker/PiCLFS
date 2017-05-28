@@ -112,6 +112,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/gdbm
 	@make staging -C $(PACKAGES_DIR)/libcap
 	@make staging -C $(PACKAGES_DIR)/openssl
+	@make staging -C $(PACKAGES_DIR)/libxml2
 	@make staging -C $(PACKAGES_DIR)/libpng
 	@make staging -C $(PACKAGES_DIR)/nasm
 	@make staging -C $(PACKAGES_DIR)/libjpeg-turbo
@@ -121,12 +122,17 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/harfbuzz
 	@make staging -C $(PACKAGES_DIR)/freetype
 	@make staging -C $(PACKAGES_DIR)/fontconfig
+	@make staging -C $(PACKAGES_DIR)/pixman
+	@make staging -C $(PACKAGES_DIR)/util-macros
+	@make staging -C $(PACKAGES_DIR)/xorg/xproto
+	@make staging -C $(PACKAGES_DIR)/libxau
+	@make staging -C $(PACKAGES_DIR)/xcb-proto
+	@make staging -C $(PACKAGES_DIR)/libxcb
+	@make staging -C $(PACKAGES_DIR)/xorg/xlib
+	@make staging -C $(PACKAGES_DIR)/cairo
 	@make staging -C $(PACKAGES_DIR)/pango
 	@make staging -C $(PACKAGES_DIR)/hicolor-icon-theme
 	@make staging -C $(PACKAGES_DIR)/libgtk2
-	@make staging -C $(PACKAGES_DIR)/pixman
-	@make staging -C $(PACKAGES_DIR)/libxml2
-	@make staging -C $(PACKAGES_DIR)/cairo
 	@make staging -C $(PACKAGES_DIR)/mtdev
 	@make staging -C $(PACKAGES_DIR)/xkeyboard-config
 	@make staging -C $(PACKAGES_DIR)/libxkbcommon
@@ -204,6 +210,32 @@ system:
 	@make system -C $(PACKAGES_DIR)/openssl
 	@make system -C $(PACKAGES_DIR)/openssh
 	@make system -C $(PACKAGES_DIR)/ntp
+	@make system -C $(PACKAGES_DIR)/libxml2
+	@make system -C $(PACKAGES_DIR)/libpng
+	@make system -C $(PACKAGES_DIR)/nasm
+	@make system -C $(PACKAGES_DIR)/libjpeg-turbo
+	@make system -C $(PACKAGES_DIR)/atk
+	@make system -C $(PACKAGES_DIR)/gdk-pixbuf
+	@make system -C $(PACKAGES_DIR)/freetype
+	@make system -C $(PACKAGES_DIR)/harfbuzz
+	@make system -C $(PACKAGES_DIR)/freetype
+	@make system -C $(PACKAGES_DIR)/fontconfig
+	@make system -C $(PACKAGES_DIR)/pixman
+	@make system -C $(PACKAGES_DIR)/util-macros
+	@make system -C $(PACKAGES_DIR)/xorg/xproto
+	@make system -C $(PACKAGES_DIR)/libxau
+	@make system -C $(PACKAGES_DIR)/xcb-proto
+	@make system -C $(PACKAGES_DIR)/libxcb
+	@make system -C $(PACKAGES_DIR)/xorg/xlib
+	@make system -C $(PACKAGES_DIR)/cairo
+	@make system -C $(PACKAGES_DIR)/pango
+	@make system -C $(PACKAGES_DIR)/hicolor-icon-theme
+	@make system -C $(PACKAGES_DIR)/libgtk2
+	@make system -C $(PACKAGES_DIR)/mtdev
+	@make system -C $(PACKAGES_DIR)/xkeyboard-config
+	@make system -C $(PACKAGES_DIR)/libxkbcommon
+	@make system -C $(PACKAGES_DIR)/libevdev
+	@make system -C $(PACKAGES_DIR)/libinput
 	@make system -C $(PACKAGES_DIR)/glibc
 	$(PRINT_BUILD_TIME)
 

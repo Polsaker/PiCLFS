@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := cairo
 SOURCE := $(PACKAGES_DIR)/$(NAME)/cairo-1.14.8.part*
-TARGET_DEPENDENCIES := libpng pixman libgtk2
+TARGET_DEPENDENCIES := libpng pixman
 
 staging:
 	@$(STEP) "Cairo 1.14.8"

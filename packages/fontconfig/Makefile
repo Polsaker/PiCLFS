@@ -2,7 +2,7 @@ include $(WORKSPACE_DIR)/support/dependencies.mk
 
 NAME := fontconfig
 SOURCE := $(PACKAGES_DIR)/$(NAME)/fontconfig-2.12.1.tar.bz2
-TARGET_DEPENDENCIES := freetype
+TARGET_DEPENDENCIES := freetype libxml2
 
 staging:
 	@$(STEP) "Fontconfig 2.12.1"
@@ -26,6 +26,8 @@ staging:
  	--prefix=$(SYSROOT_DIR)/usr \
 	--sysconfdir=$(SYSROOT_DIR)/etc \
 	--localstatedir=$(SYSROOT_DIR)/var \
+	--enable-libxml2 \
+	--with-arch=$(CONFIG_TARGET) \
 	--disable-docs )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/fontconfig-2.12.1
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/fontconfig-2.12.1
@@ -55,6 +57,7 @@ system:
 	--sysconfdir=/etc \
 	--localstatedir=/var \
 	--docdir=/usr/share/doc/fontconfig-2.12.1 \
+	--enable-libxml2 \
 	--with-arch=$(CONFIG_TARGET) \
 	--disable-docs )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/fontconfig-2.12.1

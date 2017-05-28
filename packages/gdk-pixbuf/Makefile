@@ -51,8 +51,7 @@ staging:
 	--build=$(CONFIG_HOST) \
  	--prefix=$(SYSROOT_DIR)/usr \
 	--disable-glibtest \
-	--without-libtiff \
-	--with-x11 )
+	--without-libtiff )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
 	@rm -rf $(BUILD_DIR)/gdk-pixbuf-2.36.6
@@ -81,8 +80,7 @@ system:
 	--build=$(CONFIG_HOST) \
  	--prefix=/usr \
 	--disable-glibtest \
-	--without-libtiff \
-	--with-x11 )
+	--without-libtiff )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/gdk-pixbuf-2.36.6
 	@rm -rf $(BUILD_DIR)/gdk-pixbuf-2.36.6
