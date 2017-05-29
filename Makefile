@@ -96,6 +96,7 @@ toolchain-staging:
 	@rm -rf $(BUILD_DIR)
 	@mkdir -pv $(LOG_DIR) $(BUILD_DIR)
 	@rm -rf $(LOG_DIR)/staging.packages
+	@make staging -C $(PACKAGES_DIR)/firmware
 	@make staging -C $(PACKAGES_DIR)/zlib
 	@make staging -C $(PACKAGES_DIR)/binutils
 	@make staging -C $(PACKAGES_DIR)/gmp
@@ -114,6 +115,7 @@ toolchain-staging:
 	@make staging -C $(PACKAGES_DIR)/gdbm
 	@make staging -C $(PACKAGES_DIR)/libcap
 	@make staging -C $(PACKAGES_DIR)/openssl
+	@make staging -C $(PACKAGES_DIR)/linux-pam
 	@make staging -C $(PACKAGES_DIR)/libxml2
 	@make staging -C $(PACKAGES_DIR)/libpng
 	@make staging -C $(PACKAGES_DIR)/nasm
@@ -173,6 +175,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/glib
 	@make system -C $(PACKAGES_DIR)/pkg-config
 	@make system -C $(PACKAGES_DIR)/sed
+	@make system -C $(PACKAGES_DIR)/linux-pam
 	@make system -C $(PACKAGES_DIR)/shadow
 	@make system -C $(PACKAGES_DIR)/psmisc
 	@make system -C $(PACKAGES_DIR)/iana-etc
@@ -247,6 +250,7 @@ system:
 	@make system -C $(PACKAGES_DIR)/wayland-protocols
 	@make system -C $(PACKAGES_DIR)/weston
 	@make system -C $(PACKAGES_DIR)/glibc
+	@make system -C $(PACKAGES_DIR)/firmware
 	$(PRINT_BUILD_TIME)
 
 kernel:
