@@ -17,14 +17,13 @@ staging:
 	--target=$(CONFIG_TARGET) \
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
-	--prefix=/usr \
-	--sysconfdir=/etc \
-	--libdir=/usr/lib \
+	--prefix=$(SYSROOT_DIR)/usr \
+	--sysconfdir=$(SYSROOT_DIR)/etc \
+	--libdir=$(SYSROOT_DIR)/usr/lib \
 	--disable-regenerate-docu \
-	--enable-securedir=/lib/security \
-	--docdir=/usr/share/doc/Linux-PAM-1.3.0 )
+	--enable-securedir=$(SYSROOT_DIR)/lib/security )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/Linux-PAM-1.3.0
-	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(SYSROOT_DIR) install -C $(BUILD_DIR)/Linux-PAM-1.3.0
+	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/Linux-PAM-1.3.0
 	@rm -rf $(BUILD_DIR)/Linux-PAM-1.3.0
 	@echo $(NAME) >> $(LOG_DIR)/staging.packages
 

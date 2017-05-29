@@ -29,7 +29,8 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--sysconfdir=/etc \
-	--with-group-name-max-length=32 )
+	--with-group-name-max-length=32 \
+	--without-libpam )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/shadow-4.4
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/shadow-4.4
 	@sed -i 's/yes/no/' $(ROOTFS_DIR)/etc/default/useradd
