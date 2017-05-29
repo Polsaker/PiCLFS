@@ -21,6 +21,7 @@ staging:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=$(SYSROOT_DIR)/usr \
+	--with-xkb-config-root=/usr/share/X11/xkb \
 	--disable-x11 \
 	--disable-wayland )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libxkbcommon-0.7.1
@@ -46,6 +47,7 @@ system:
 	--host=$(CONFIG_TARGET) \
 	--build=$(CONFIG_HOST) \
 	--prefix=/usr \
+	--with-xkb-config-root=/usr/share/X11/xkb \
 	--disable-x11 \
 	--disable-wayland )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/libxkbcommon-0.7.1
