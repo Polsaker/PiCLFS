@@ -28,7 +28,7 @@ staging:
 	--disable-drm-compositor \
 	--disable-weston-launch \
 	--enable-demo-clients-install \
-	WESTON_NATIVE_BACKEND="rpi-backend.so" )
+	WESTON_NATIVE_BACKEND="fbdev-backend.so" )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/weston-2.0.0
 	@make -j$(CONFIG_PARALLEL_JOBS) install -C $(BUILD_DIR)/weston-2.0.0
 	@rm -rf $(BUILD_DIR)/weston-2.0.0
@@ -58,7 +58,7 @@ system:
 	--disable-drm-compositor \
 	--disable-weston-launch \
 	--enable-demo-clients-install \
-	WESTON_NATIVE_BACKEND="rpi-backend.so" )
+	WESTON_NATIVE_BACKEND="fbdev-backend.so" )
 	@make -j$(CONFIG_PARALLEL_JOBS) -C $(BUILD_DIR)/weston-2.0.0
 	@make -j$(CONFIG_PARALLEL_JOBS) DESTDIR=$(ROOTFS_DIR) install -C $(BUILD_DIR)/weston-2.0.0
 	@echo "/run/shm/wayland dir 1700 root root" >> $(ROOTFS_DIR)/etc/sysconfig/createfiles
